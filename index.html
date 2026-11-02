@@ -509,8 +509,8 @@ function buildSeed(){
   const L=()=>({dealers:[],mfrs:[],customers:[],owners:[],supervisors:[],specs:[],sizes:[]});
   const lists=L();
   const add=(k,short,fullName)=>{if(!lists[k].some(x=>x.short===short))lists[k].push({short,full:fullName==null?short:fullName,active:true})};
-  const dealerFull={'立成':'經銷A鋼鐵有限公司'};
-  ['經銷C','經銷B','經銷A','立成'].forEach(d=>add('dealers',d,dealerFull[d]||d));
+  const dealerFull={'經銷D':'經銷A鋼鐵有限公司'};
+  ['經銷C','經銷B','經銷A','經銷D'].forEach(d=>add('dealers',d,dealerFull[d]||d));
   add('mfrs','協勝發',MFR_FULL);lists.mfrs[0].def=true;
   ['SD280','SD420W','SD280W'].forEach(s=>add('specs',s));
   Object.values(TITLES).forEach(s=>add('sizes',s));
@@ -744,7 +744,7 @@ A.certPrev=()=>{certSync();const e=certCalc().err;certView(e.length?e.join('<br>
 // 範例資料（第 1 版「帶入範例」，判讀也重用這個函式）
 A.certSample=()=>{
   const o=S.cert;
-  S.cert={...certFresh(),mode:o.mode,upName:o.upName,done:o.done,no:'261007D0041',buyer:'經銷A鋼鐵有限公司',dealer:'立成',mfr:'協勝發',rows:[
+  S.cert={...certFresh(),mode:o.mode,upName:o.upName,done:o.done,no:'261007D0041',buyer:'經銷A鋼鐵有限公司',dealer:'經銷D',mfr:'協勝發',rows:[
    {proc:'電爐',furnace:'R009374',spec:'SD280',title:'D16',len:'12',bundles:'7',t:'6.930'},
    {proc:'電爐',furnace:'R009374',spec:'SD280',title:'D16',len:'14',bundles:'7',t:'7.270'},
    {proc:'電爐',furnace:'R010732',spec:'SD280',title:'D13',len:'12',bundles:'14',t:'14.460'}]};
