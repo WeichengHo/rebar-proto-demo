@@ -227,6 +227,10 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
 }
 @media print{.ig-nav,.ig-tabbar,.ig-header,.ig-toast-host{display:none!important}.ig-main{margin:0;padding:0}}
 
+/* iOS Safari：date 輸入框原生外觀有固定最小寬度，會超出卡片（需求方 2026-11-03 回報） */
+input[type="date"].ig-input{-webkit-appearance:none;appearance:none;display:block;width:100%;max-width:100%;min-width:0;box-sizing:border-box;text-align:left}
+input[type="date"].ig-input::-webkit-date-and-time-value{text-align:left;margin:0}
+
 /* frame.css — 外框、登入、提示訊息（只用 --ig- 變數與 ig- class；自訂 class 一律 m-frame-） */
 
 /* 頁首：系統名（小字）在上、頁名在下 */
@@ -299,7 +303,7 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
   .m-cert-actions .ig-btn{width:100%}
 }
 
-/* stock 模組：進貨清單（依證明分組＋夠不夠出多列查詢） */
+/* stock 模組：進貨清單（依證明分組＋多尺寸查庫存多列查詢） */
 .m-stock-page{padding-bottom:var(--ig-sp-5)}
 .m-stock-page .ig-num,.m-stock-table td,.m-stock-gtot{font-variant-numeric:tabular-nums}
 .m-stock-filter,.m-stock-query{margin-bottom:var(--ig-sp-4)}
@@ -315,13 +319,14 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
 .m-stock-sec{margin:var(--ig-sp-4) 0 var(--ig-sp-2);font-size:var(--ig-fs-md);font-weight:var(--ig-fw-semi)}
 .m-stock-hit{padding:var(--ig-sp-2) 0;border-top:1px solid var(--ig-line-soft)}
 .m-stock-hit-h{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:var(--ig-sp-3);row-gap:var(--ig-sp-1)}
-.m-stock-hit-no{font-weight:var(--ig-fw-semi)}
+.m-stock-hit-no{font-size:var(--ig-fs-lg);font-weight:var(--ig-fw-semi);overflow-wrap:anywhere}
 .m-stock-hit-cnt{margin-left:auto}
-.m-stock-item{padding:var(--ig-sp-1) 0 var(--ig-sp-1) var(--ig-sp-3)}
-.m-stock-item-no{opacity:.75}
-.m-stock-item-h{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ig-sp-2)}
-.m-stock-item-t{font-weight:var(--ig-fw-semi)}
-.m-stock-item-d{overflow-wrap:anywhere}
+/* 每項一列，字體與證明編號同為 --ig-fs-lg；窄螢幕自動換行 */
+.m-stock-item{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:var(--ig-sp-3);row-gap:2px;padding:var(--ig-sp-1) 0 var(--ig-sp-1) var(--ig-sp-3);font-size:var(--ig-fs-lg);min-width:0}
+.m-stock-item-sz{font-weight:var(--ig-fw-semi)}
+.m-stock-item-sum{font-weight:var(--ig-fw-semi)}
+.m-stock-item-f{min-width:0;overflow-wrap:anywhere}
+.m-stock-item-lack{color:var(--ig-danger);font-weight:var(--ig-fw-semi);white-space:nowrap}
 .m-stock-groups{display:flex;flex-direction:column;gap:var(--ig-sp-3)}
 .m-stock-group{padding:var(--ig-sp-3) var(--ig-sp-4)}
 .m-stock-ghead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:var(--ig-sp-2)}
@@ -338,6 +343,7 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
   .m-stock-group{padding:var(--ig-sp-3)}
   .m-stock-gsum{align-items:baseline;flex-direction:row;gap:var(--ig-sp-2)}
   .m-stock-table th,.m-stock-table td{padding-left:var(--ig-sp-2);padding-right:var(--ig-sp-2)}
+  .m-stock-item{padding-left:0}
 }
 
 /* ship 模組：只寫版面，顏色與字級取自 tokens.css */
@@ -379,7 +385,7 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
   .m-ship-nodel{text-align:left}
 }
 
-/* 模組 lists：清單維護 FR-01、待確認清單 FR-17 */
+/* 模組 lists：清單維護 FR-01、待確認清單 FR-17、出貨報表、修改紀錄 */
 .m-lists-tabs{margin-bottom:var(--ig-sp-5)}
 .m-lists-in-wide{min-width:200px}
 .m-lists-sel{min-width:200px}
@@ -404,6 +410,28 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
 .m-lists-prev tbody tr:hover{background:none}
 @media (max-width:767px){
   .m-lists-export{width:100%;min-height:var(--ig-touch-min)}
+}
+/* 修改紀錄：桌面為四欄列，手機每筆一張卡片 */
+.m-log-warn{margin-top:var(--ig-sp-2)}
+.m-log-head,.m-log-item{display:grid;grid-template-columns:160px 100px minmax(0,1fr) minmax(0,1.4fr);gap:var(--ig-sp-3);align-items:start}
+.m-log-head{margin-top:var(--ig-sp-3);padding:var(--ig-sp-2) var(--ig-sp-4);color:var(--ig-text-sub);font-size:var(--ig-fs-xs);border-bottom:1px solid var(--ig-line)}
+.m-log-list{list-style:none;margin:0;padding:0}
+.m-log-item{padding:var(--ig-sp-3) var(--ig-sp-4);border-bottom:1px solid var(--ig-line-soft);font-size:var(--ig-fs-sm)}
+.m-log-item>div{min-width:0;overflow-wrap:anywhere}
+.m-log-when,.m-log-who{color:var(--ig-text-sub)}
+.m-log-arrow{margin:0 var(--ig-sp-2);color:var(--ig-text-faint)}
+.m-log-before{color:var(--ig-text-sub)}
+.m-log-after{font-weight:var(--ig-fw-semi)}
+.m-log-more{justify-content:center;margin-top:var(--ig-sp-4)}
+.m-log-more .ig-btn{min-height:var(--ig-touch-min)}
+@media (max-width:767px){
+  .m-log-head{display:none}
+  .m-log-list{display:flex;flex-direction:column;gap:var(--ig-sp-3);margin-top:var(--ig-sp-3)}
+  .m-log-item{display:flex;flex-direction:column;gap:var(--ig-sp-1);border:1px solid var(--ig-line);border-radius:var(--ig-r-lg);background:var(--ig-bg);padding:var(--ig-sp-4)}
+  .m-log-when{font-size:var(--ig-fs-xs)}
+  .m-log-target{font-weight:var(--ig-fw-semi)}
+  .m-log-chg{padding-top:var(--ig-sp-2);border-top:1px solid var(--ig-line-soft)}
+  .m-log-more .ig-btn{width:100%}
 }
 
 /* 模組 out：產出。預覽區維持紙本外觀（白紙、細框、黑字），操作區使用 ig- 元件 */
@@ -814,7 +842,7 @@ A.certSave=()=>{
 };
 SCREENS.cert=()=>certView();
 
-// ===== 進貨清單 FR-05（第 6 版：依證明分組＋夠不夠出多列查詢）=====
+// ===== 進貨清單 FR-05（第 7 版：依證明分組＋多尺寸查庫存多列查詢）=====
 S.stock={six:true,pos:true,base:todayStr()};
 S.stockQ={rows:[{spec:'',size:'',kg:''}],ran:false};
 function cutoff(base){const d=new Date(base+'T00:00:00');d.setMonth(d.getMonth()-6);const p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())}
@@ -826,6 +854,7 @@ function stockReadQ(){
 }
 A.stockSet=()=>{stockReadQ();S.stock={six:document.getElementById('f6').checked,pos:document.getElementById('fp').checked,base:val('fb')||todayStr()};SCREENS.stock()};
 A.stockClear=()=>{stockReadQ();S.stock={six:false,pos:false,base:val('fb')||todayStr()};SCREENS.stock()};
+A.stockQReset=()=>{S.stockQ.rows=[{spec:'',size:'',kg:''}];S.stockQ.ran=false;SCREENS.stock()};
 A.stockQAdd=()=>{stockReadQ();S.stockQ.rows.push({spec:'',size:'',kg:''});S.stockQ.ran=false;SCREENS.stock()};
 A.stockQDel=i=>{stockReadQ();const q=S.stockQ;if(q.rows.length<=1)return;q.rows.splice(i,1);q.ran=false;SCREENS.stock()};
 A.stockQuery=()=>{
@@ -843,7 +872,7 @@ A.stockQuery=()=>{
   }
   q.ran=true;SCREENS.stock();
 };
-// 夠不夠出（多列）：回傳 {full:[...], partial:[...]}
+// 多尺寸查庫存（多列）：回傳 {full:[...], partial:[...]}
 // 每張證明 = {cert, per:[{row,items,sum,ok,single}], okCount}；只計剩餘 > 0（remain 已排除待確認）
 // 同規格同尺寸出現在多列時，該組需求合計後再比對庫存
 // full＝每一列都夠；partial＝至少一列夠但不是全部。排序依證明編號前 6 碼（日期）舊的在前
@@ -873,24 +902,27 @@ function stockQueryRow(r,i,many){
     '<div class="ig-field"><label class="ig-label" for="m-stock-qk-'+i+'">需要（kg）</label><input class="ig-input ig-input-num" type="number" inputmode="numeric" min="1" step="1" id="m-stock-qk-'+i+'" value="'+h(r.kg)+'" onkeydown="if(event.key===\'Enter\')A.stockQuery()"></div>'+
     '<div class="ig-field m-stock-qdel">'+(many?'<button class="ig-btn ig-btn-text" type="button" aria-label="刪除第 '+(i+1)+' 項" onclick="A.stockQDel('+i+')">刪除</button>':'')+'</div></div>';
 }
+// 每項一列：尺寸短碼＋合計剩在前，爐號明細在後；不夠的在列尾標紅色「不夠，缺 N kg」
 function stockHitHtml(x,showCount,n){
   const c=x.cert;
   const lines=x.per.map(p=>{
     const r=p.row;
-    const furn=p.items.length?p.items.map(i=>h(i.d.furnace)+'（剩 '+fmt(i.rem)+'）').join('、'):'無剩餘';
+    const furn=p.items.length?p.items.map(i=>h(i.d.furnace)+' 剩 '+fmt(i.rem)).join('、'):'無剩餘';
     const lack=Math.max(0,Number(r.kg)-p.sum);
-    return '<div class="m-stock-item'+(p.ok?'':' m-stock-item-no')+'"><div class="m-stock-item-h"><span class="m-stock-item-t">'+h(r.spec)+'　'+h(r.size)+'　需要 <span class="ig-num">'+fmt(Number(r.kg))+'</span> kg</span>'+
-      (p.ok?'<span class="ig-badge ig-badge-ok">夠</span>'+(p.single?'<span class="ig-badge">單一爐號就夠</span>':'<span class="ig-badge ig-badge-warn">需多爐號合計</span>'):'<span class="ig-badge ig-badge-err">不夠</span>')+'</div>'+
-      '<div class="ig-sub m-stock-item-d">'+furn+'；合計剩 <span class="ig-num">'+fmt(p.sum)+'</span> kg'+(p.ok?'':'，缺 <span class="ig-num">'+fmt(lack)+'</span> kg')+'</div></div>';
+    return '<div class="m-stock-item'+(p.ok?'':' m-stock-item-no')+'"><span class="m-stock-item-sz">'+h(r.size)+'</span>'+
+      '<span class="m-stock-item-sum">合計剩 <span class="ig-num">'+fmt(p.sum)+'</span> kg</span>'+
+      '<span class="m-stock-item-f">'+furn+'</span>'+
+      (p.ok?'':'<span class="m-stock-item-lack">不夠，缺 <span class="ig-num">'+fmt(lack)+'</span> kg</span>')+'</div>';
   }).join('');
   return '<div class="m-stock-hit"><div class="m-stock-hit-h"><span class="m-stock-hit-no">'+h(c.no)+'</span><span class="ig-sub">'+h(c.date)+'　'+h(c.dealer)+'</span>'+
     (showCount?'<span class="ig-badge ig-badge-warn m-stock-hit-cnt">夠 '+x.okCount+' / '+n+' 項</span>':'')+'</div>'+lines+'</div>';
 }
 function stockQueryHtml(){
   const q=S.stockQ,many=q.rows.length>1;
-  const form='<div class="ig-card m-stock-query"><h3 class="ig-h2">夠不夠出</h3><div id="m-stock-qmsg"></div>'+
+  const form='<div class="ig-card m-stock-query"><h3 class="ig-h2">多尺寸查庫存</h3><div id="m-stock-qmsg"></div>'+
     q.rows.map((r,i)=>stockQueryRow(r,i,many)).join('')+
     '<div class="m-stock-qact"><button class="ig-btn" type="button" onclick="A.stockQAdd()">＋ 再加一項</button>'+
+    '<button class="ig-btn" type="button" onclick="A.stockQReset()">清空</button>'+
     '<button class="ig-btn ig-btn-primary" type="button" onclick="A.stockQuery()">查詢</button></div>';
   let res='';
   if(q.ran){
@@ -939,7 +971,7 @@ SCREENS.stock=()=>{
    '<label class="ig-check"><input type="checkbox" id="f6" '+(f.six?'checked':'')+' onchange="A.stockSet()"><span>只看近 6 個月（含 '+h(co)+' 起）</span></label>'+
    '<label class="ig-check"><input type="checkbox" id="fp" '+(f.pos?'checked':'')+' onchange="A.stockSet()"><span>只看剩餘 &gt; 0</span></label></div>'+
    '<div class="ig-field m-stock-base"><label class="ig-label" for="fb">基準日</label><input class="ig-input" type="date" id="fb" value="'+h(f.base)+'" onchange="A.stockSet()"></div>'+
-   '<div class="ig-sub">共 '+groups.length+' 張證明、'+rows.length+' 筆明細，剩餘合計 <span class="ig-num">'+fmt(tot)+'</span> kg。關掉「近 6 個月」可看到仍有庫存的舊證明明細。</div></div>'+
+   '<div class="ig-sub">共 '+groups.length+' 張證明、'+rows.length+' 筆明細。關掉「近 6 個月」可看到仍有庫存的舊證明明細。</div></div>'+
    list+'</div>';
 };
 
@@ -951,6 +983,7 @@ const curSlip=()=>DB.slips.find(s=>s.id===S.ship.slipId);
 const shipIsPrinted=s=>!!(s&&s.printed===true);
 const SHIP_REPRINT_MSG='資料已修改，請重新列印';
 const SHIP_NODEL_MSG='已列印的出貨單不能刪除，只能修改';
+const SHIP_ITEMNODEL_MSG='已列印的出貨單不能刪明細，只能改重量';
 const SHIP_NOCUST_MSG='請先到清單維護新增客戶';
 // 明細被修改時呼叫：已列印則自動取消勾選並寫修改紀錄，回傳是否有取消（呼叫端負責 save）
 function shipUnprintOnChange(s){
@@ -1094,12 +1127,13 @@ A.shipAdd=()=>{
   s.items.push({id:uid(),cert:no,spec:f.spec,size:f.size,furnace:fu,kg,status:'正常'});
   writeLog('出貨明細 '+s.id+' '+no+' '+fu,'（新增）',kg+' kg');
   const un=shipUnprintOnChange(s);
-  save();f.pick='';shipView('已加入 '+no+' '+fu+' '+fmt(kg)+' kg，剩餘變成 '+fmt(r-kg)+' kg。'+(un?SHIP_REPRINT_MSG+'。':''),'ok');
+  // 加入成功：規格、尺寸、已選證明全部清空（公斤欄隨候選區一起不再顯示）；失敗時上面已 return，不會走到這裡
+  save();f.spec='';f.size='';f.pick='';shipView('已加入 '+no+' '+fu+' '+fmt(kg)+' kg，剩餘變成 '+fmt(r-kg)+' kg。'+(un?SHIP_REPRINT_MSG+'。':''),'ok');
 };
 A.shipEdit=id=>{
   shipErrRow=id;
   const s=curSlip(),it=s.items.find(i=>i.id===id),kg=Math.round(+val('e_'+id));
-  if(!(kg>0))return shipView('重量要大於 0；明細不可刪除，只能修改。');
+  if(!(kg>0))return shipView('重量要大於 0；請輸入大於 0 的重量。');
   const x=allDetails().find(y=>y.cert.no===it.cert&&y.d.spec===it.spec&&y.d.size===it.size&&y.d.furnace===it.furnace);
   const max=it.status==='正常'?remain(x.cert,x.d)+it.kg:remain(x.cert,x.d);
   if(kg>max)return shipView('超過剩餘數量，剩餘 '+fmt(max)+' kg（含這筆原本的 '+fmt(it.kg)+' kg），不能存檔。');
@@ -1107,6 +1141,18 @@ A.shipEdit=id=>{
   writeLog('出貨明細 '+s.id+' '+it.cert+' '+it.furnace,it.kg,kg);it.kg=kg;
   const un=shipUnprintOnChange(s);
   save();shipView('已修改，並寫入修改紀錄。'+(un?SHIP_REPRINT_MSG+'。':''),'ok');
+};
+// 刪除單筆明細：只有未列印的出貨單可刪；剩餘由 usedKg 從明細即時計算，刪除後重量自然回到證明剩餘
+function shipItemSummary(i){return i.cert+' '+i.spec+' '+i.size+' 爐號 '+i.furnace+' '+fmt(i.kg)+' kg'}
+A.shipItemDel=id=>{
+  const s=curSlip();if(!s)return;
+  if(shipIsPrinted(s))return toast(SHIP_ITEMNODEL_MSG,true);
+  const it=s.items.find(i=>i.id===id);if(!it)return;
+  const sum=shipItemSummary(it);
+  if(!confirm('確定刪除這筆出貨明細？\n'+sum+'\n刪除後這筆重量會回到證明明細的剩餘。'))return;
+  s.items.splice(s.items.indexOf(it),1);
+  writeLog('出貨明細 '+s.id+' '+it.cert+' '+it.furnace,sum,'（刪除）');save();
+  shipView('已刪除 '+it.cert+' '+it.furnace+' '+fmt(it.kg)+' kg，重量已回到證明剩餘。','ok');
 };
 
 // 擋下訊息：頂部 ig-alert（B 層）；多項錯誤用 ul 全部列出
@@ -1144,6 +1190,11 @@ function shipDelBtn(s,cls){
   if(shipIsPrinted(s))return '<button class="ig-btn ig-btn-sm" disabled aria-describedby="nd_'+s.id+'">刪除</button><span class="ig-field-hint m-ship-nodel" id="nd_'+s.id+'">'+SHIP_NODEL_MSG+'</span>';
   return '<button class="ig-btn ig-btn-danger ig-btn-sm" onclick="A.shipDel(\''+s.id+'\')">刪除</button>';
 }
+// 明細刪除按鈕：未列印可按；已列印停用並在旁邊提示
+function shipItemDelBtn(s,i){
+  if(shipIsPrinted(s))return '<button class="ig-btn ig-btn-sm" disabled aria-describedby="ind_'+i.id+'">刪除</button><span class="ig-field-hint m-ship-nodel" id="ind_'+i.id+'">'+SHIP_ITEMNODEL_MSG+'</span>';
+  return '<button class="ig-btn ig-btn-danger ig-btn-sm" onclick="A.shipItemDel(\''+i.id+'\')">刪除</button>';
+}
 // 下拉選項：目前值若已停用也保留，避免存檔時被悄悄改掉
 function shipOptCur(k,cur){const a=activeList(k).map(o=>o.short);if(cur&&a.indexOf(cur)<0)a.push(cur);return a}
 function shipView(m,cls){
@@ -1176,10 +1227,10 @@ function shipView(m,cls){
      '<div class="ig-card-actions"><button class="ig-btn ig-btn-sm" onclick="A.shipClose()">換一張出貨單</button><button class="ig-btn ig-btn-sm" onclick="go(\'out\');S.out.slipId=\''+s.id+'\';SCREENS.out()">前往產出</button>'+shipDelBtn(s)+'</div></div>';
   }
   if(s){
-    g+='<h3 class="ig-h2">出貨明細（可改重量，不可刪除）</h3>';
+    g+='<h3 class="ig-h2">出貨明細</h3>';
     if(s.items.length){
       g+='<div class="ig-table-wrap"><table class="ig-table ig-table-stack"><thead><tr><th>證明編號</th><th>規格</th><th>尺寸</th><th>爐號</th><th>狀態</th><th class="ig-num">重量（kg）</th><th class="ig-num">修改為（kg）</th><th></th></tr></thead><tbody>'+
-       s.items.map(i=>'<tr'+(isErr&&shipErrRow===i.id?' class="ig-row-err"':'')+'><td data-label="證明編號">'+h(i.cert)+'</td><td data-label="規格">'+h(i.spec)+'</td><td data-label="尺寸">'+h(i.size)+'</td><td data-label="爐號">'+h(i.furnace)+'</td><td data-label="狀態"><span class="ig-badge'+(i.status==='正常'?' ig-badge-ok':' ig-badge-warn')+'">'+h(i.status)+'</span></td><td class="ig-num" data-label="重量（kg）">'+fmt(i.kg)+'</td><td class="ig-num" data-label="修改為（kg）"><div class="m-ship-edit"><label class="ig-sr-only" for="e_'+i.id+'">修改為（kg）</label><input id="e_'+i.id+'" class="ig-input ig-input-num" type="number" inputmode="numeric" value="'+i.kg+'"></div></td><td><button class="ig-btn ig-btn-text ig-btn-sm" onclick="A.shipEdit(\''+i.id+'\')">儲存修改</button></td></tr>').join('')+
+       s.items.map(i=>'<tr'+(isErr&&shipErrRow===i.id?' class="ig-row-err"':'')+'><td data-label="證明編號">'+h(i.cert)+'</td><td data-label="規格">'+h(i.spec)+'</td><td data-label="尺寸">'+h(i.size)+'</td><td data-label="爐號">'+h(i.furnace)+'</td><td data-label="狀態"><span class="ig-badge'+(i.status==='正常'?' ig-badge-ok':' ig-badge-warn')+'">'+h(i.status)+'</span></td><td class="ig-num" data-label="重量（kg）">'+fmt(i.kg)+'</td><td class="ig-num" data-label="修改為（kg）"><div class="m-ship-edit"><label class="ig-sr-only" for="e_'+i.id+'">修改為（kg）</label><input id="e_'+i.id+'" class="ig-input ig-input-num" type="number" inputmode="numeric" value="'+i.kg+'"></div></td><td><div class="m-ship-rowact"><button class="ig-btn ig-btn-text ig-btn-sm" onclick="A.shipEdit(\''+i.id+'\')">儲存修改</button>'+shipItemDelBtn(s,i)+'</div></td></tr>').join('')+
        '</tbody></table></div>';
     }else g+='<div class="ig-empty"><div class="ig-empty-title">尚無明細</div><div>從下方挑選證明明細，加入這張出貨單</div></div>';
     const szs=shipSizesFor(f.spec);if(f.size&&szs.indexOf(f.size)<0)f.size='';
@@ -1406,6 +1457,54 @@ SCREENS.report=()=>{
    '<p class="ig-field-hint m-lists-note">依出貨單開立月份，每月一個工作表，檔案為 .xls（Excel 可直接開啟）。取拉力日、取送審日、取輻射日留空。</p></div>'+
    '<div id="r_prev"></div>';
   A.reportPreview();
+};
+
+// ===== 修改紀錄（只能看）=====
+if(!NAV.some(x=>x[0]==='log'))NAV.push(['log','修改紀錄']);
+FRAME_ICON.log='<circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/>';
+const LOG_PAGE=30;
+S.log={q:'',from:'',to:'',n:LOG_PAGE};
+// when 例如「2026/11/3 14:05:12」→ 2026-11-03；無法解析時回傳空字串
+function logDay(w){
+  const m=String(w==null?'':w).trim().match(/^(\d{4})[\/\-.](\d{1,2})[\/\-.](\d{1,2})/);
+  return m?m[1]+'-'+m[2].padStart(2,'0')+'-'+m[3].padStart(2,'0'):'';
+}
+function logFiltered(){
+  const q=listsNorm(S.log.q).trim(),a=S.log.from,b=S.log.to;
+  return DB.log.filter(e=>{
+    if(q&&!(listsNorm(e.target)+' '+listsNorm(e.before)+' '+listsNorm(e.after)).includes(q))return false;
+    if(a||b){const d=logDay(e.when);if(!d)return false;if(a&&d<a)return false;if(b&&d>b)return false}
+    return true;
+  });
+}
+// 只重繪清單區（#lg_list），搜尋框與日期框不動，輸入時不失焦
+function logRender(){
+  const box=document.getElementById('lg_list');if(!box)return;
+  const total=DB.log.length,hit=logFiltered(),shown=hit.slice(0,S.log.n);
+  let t='<div class="ig-field-hint" id="lg_cnt" aria-live="polite">符合 '+hit.length+' 筆／共 '+total+' 筆</div>';
+  if(S.log.from&&S.log.to&&S.log.from>S.log.to)t+='<div class="ig-alert ig-alert-warn m-log-warn"><span class="ig-alert-title">起日晚於迄日，沒有符合的紀錄。</span></div>';
+  if(!total)t='<div class="ig-empty"><div class="ig-empty-title">還沒有修改紀錄</div><div>清單維護、待確認改正等修改會記錄在這裡。</div></div>';
+  else if(!hit.length)t+='<div class="ig-empty"><div class="ig-empty-title">沒有符合條件的紀錄</div><div>換個關鍵字，或調整日期範圍。</div></div>';
+  else{
+    t+='<div class="m-log-head" aria-hidden="true"><span>時間</span><span>帳號</span><span>對象</span><span>修改前 → 修改後</span></div><ul class="m-log-list">'+
+     shown.map(e=>'<li class="m-log-item"><div class="m-log-when">'+h(e.when)+'</div><div class="m-log-who">'+h(e.who)+'</div><div class="m-log-target">'+h(e.target)+'</div><div class="m-log-chg"><span class="m-log-before">'+h(e.before)+'</span><span class="m-log-arrow" aria-label="改為">→</span><span class="m-log-after">'+h(e.after)+'</span></div></li>').join('')+'</ul>';
+    if(hit.length>shown.length)t+='<div class="ig-btn-row m-log-more"><button class="ig-btn" onclick="A.logMore()">載入更多（還有 '+(hit.length-shown.length)+' 筆）</button></div>';
+  }
+  box.innerHTML=t;
+}
+A.logFilter=()=>{
+  const q=document.getElementById('lg_q'),a=document.getElementById('lg_from'),b=document.getElementById('lg_to');
+  S.log.q=q?q.value:S.log.q;S.log.from=a?a.value:S.log.from;S.log.to=b?b.value:S.log.to;S.log.n=LOG_PAGE;logRender();
+};
+A.logMore=()=>{S.log.n+=LOG_PAGE;logRender()};
+SCREENS.log=()=>{
+  S.log.n=LOG_PAGE;
+  document.getElementById('main').innerHTML='<h2 class="ig-h1">修改紀錄</h2>'+
+   '<div class="ig-card"><div class="ig-field"><label class="ig-label" for="lg_q">搜尋</label><input class="ig-input" id="lg_q" type="search" autocomplete="off" placeholder="出貨單、工程名稱、證明編號等關鍵字" value="'+h(S.log.q)+'" oninput="A.logFilter()"></div>'+
+   '<div class="ig-form-row"><div class="ig-field"><label class="ig-label" for="lg_from">起日</label><input class="ig-input" type="date" id="lg_from" value="'+h(S.log.from)+'" onchange="A.logFilter()"></div>'+
+   '<div class="ig-field"><label class="ig-label" for="lg_to">迄日</label><input class="ig-input" type="date" id="lg_to" value="'+h(S.log.to)+'" onchange="A.logFilter()"></div></div></div>'+
+   '<div id="lg_list"></div>';
+  logRender();
 };
 
 // ===== 產出 FR-11～FR-15 =====
