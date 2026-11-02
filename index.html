@@ -299,20 +299,29 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
   .m-cert-actions .ig-btn{width:100%}
 }
 
-/* stock 模組：進貨清單（依證明分組＋夠不夠出） */
+/* stock 模組：進貨清單（依證明分組＋夠不夠出多列查詢） */
 .m-stock-page{padding-bottom:var(--ig-sp-5)}
-.m-stock-page .ig-num,.m-stock-table td,.m-stock-gtot,.m-stock-hit-kg{font-variant-numeric:tabular-nums}
+.m-stock-page .ig-num,.m-stock-table td,.m-stock-gtot{font-variant-numeric:tabular-nums}
 .m-stock-filter,.m-stock-query{margin-bottom:var(--ig-sp-4)}
 .m-stock-checks{display:flex;flex-wrap:wrap;column-gap:var(--ig-sp-5)}
 .m-stock-base{max-width:240px;margin:var(--ig-sp-2) 0 var(--ig-sp-3)}
-.m-stock-qgrid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));column-gap:var(--ig-sp-3);align-items:end}
-.m-stock-qbtn{justify-content:flex-end}
+.m-stock-qrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 64px;column-gap:var(--ig-sp-3);align-items:end}
+.m-stock-qdel{justify-content:flex-end}
+.m-stock-qdel .ig-btn{min-height:44px}
+.m-stock-qact{display:flex;flex-wrap:wrap;gap:var(--ig-sp-2);justify-content:space-between;margin-top:var(--ig-sp-2)}
+.m-stock-qact .ig-btn{min-height:44px}
 .m-stock-qres{margin-top:var(--ig-sp-2)}
+.m-stock-note{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ig-sp-2);margin:var(--ig-sp-3) 0 var(--ig-sp-1)}
 .m-stock-sec{margin:var(--ig-sp-4) 0 var(--ig-sp-2);font-size:var(--ig-fs-md);font-weight:var(--ig-fw-semi)}
-.m-stock-none{padding:var(--ig-sp-2) 0}
-.m-stock-hit{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:var(--ig-sp-3);row-gap:var(--ig-sp-1);padding:var(--ig-sp-2) 0;border-top:1px solid var(--ig-line-soft)}
+.m-stock-hit{padding:var(--ig-sp-2) 0;border-top:1px solid var(--ig-line-soft)}
+.m-stock-hit-h{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:var(--ig-sp-3);row-gap:var(--ig-sp-1)}
 .m-stock-hit-no{font-weight:var(--ig-fw-semi)}
-.m-stock-hit-kg{margin-left:auto;font-weight:var(--ig-fw-semi)}
+.m-stock-hit-cnt{margin-left:auto}
+.m-stock-item{padding:var(--ig-sp-1) 0 var(--ig-sp-1) var(--ig-sp-3)}
+.m-stock-item-no{opacity:.75}
+.m-stock-item-h{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ig-sp-2)}
+.m-stock-item-t{font-weight:var(--ig-fw-semi)}
+.m-stock-item-d{overflow-wrap:anywhere}
 .m-stock-groups{display:flex;flex-direction:column;gap:var(--ig-sp-3)}
 .m-stock-group{padding:var(--ig-sp-3) var(--ig-sp-4)}
 .m-stock-ghead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:var(--ig-sp-2)}
@@ -323,10 +332,11 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
 .m-stock-gmeta{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ig-sp-2);margin:var(--ig-sp-1) 0 var(--ig-sp-2)}
 .m-stock-table th,.m-stock-table td{white-space:nowrap}
 @media (max-width:720px){
-  .m-stock-qgrid{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .m-stock-qrow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .m-stock-qdel{grid-column:1/-1;justify-content:flex-start}
   .m-stock-base{max-width:none}
   .m-stock-group{padding:var(--ig-sp-3)}
-  .m-stock-gsum{align-items:flex-start;flex-direction:row;gap:var(--ig-sp-2);align-items:baseline}
+  .m-stock-gsum{align-items:baseline;flex-direction:row;gap:var(--ig-sp-2)}
   .m-stock-table th,.m-stock-table td{padding-left:var(--ig-sp-2);padding-right:var(--ig-sp-2)}
 }
 
@@ -356,6 +366,9 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
 .m-ship-rowact{display:flex;align-items:center;gap:var(--ig-sp-2);flex-wrap:wrap;justify-content:flex-end}
 .m-ship-nodel{flex-basis:100%;margin:0;text-align:right}
 .m-ship-projedit{margin-top:var(--ig-sp-2)}
+.m-ship-editname{flex:1 1 100%}
+.m-ship-editdup:empty{display:none}
+.m-ship-editdup{margin-top:var(--ig-sp-2)}
 .ig-card-actions .m-ship-nodel{text-align:left}
 @media (max-width:767px){
   .m-ship-edit{width:100%;max-width:160px}
@@ -400,6 +413,10 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
 .m-out-scroll{overflow-x:auto;max-width:100%;padding-bottom:var(--ig-sp-2)}
 .m-out-swipe{display:none}
 .m-out-tw{overflow-x:auto;max-width:100%}
+
+/* 提醒視窗與常駐提示 */
+.m-out-remind-text{margin:var(--ig-sp-2) 0 var(--ig-sp-3)}
+.m-out-remind-bar{margin:var(--ig-sp-3) 0}
 
 /* 工程清單（卡片）與選取後的返回列 */
 .m-out-listpane{margin-bottom:var(--ig-sp-4)}
@@ -460,7 +477,7 @@ body.ig-body,.ig-body{margin:0;background:var(--ig-bg);color:var(--ig-text);font
 }
 
 @media print{
-  .m-out-noprint,.m-out-doc.noprint{display:none!important}
+  .m-out-noprint,.m-out-doc.noprint,#m-out-remind{display:none!important}
   .m-out-scroll{overflow:visible}
   .m-out-paper{border:0;margin:0;page-break-after:always}
   .m-out-paper [contenteditable]{outline:none}
@@ -509,8 +526,8 @@ function buildSeed(){
   const L=()=>({dealers:[],mfrs:[],customers:[],owners:[],supervisors:[],specs:[],sizes:[]});
   const lists=L();
   const add=(k,short,fullName)=>{if(!lists[k].some(x=>x.short===short))lists[k].push({short,full:fullName==null?short:fullName,active:true})};
-  const dealerFull={'經銷D':'經銷A鋼鐵有限公司'};
-  ['經銷C','經銷B','經銷A','經銷D'].forEach(d=>add('dealers',d,dealerFull[d]||d));
+  const dealerFull={'立成':'經銷A鋼鐵有限公司'};
+  ['經銷C','經銷B','經銷A','立成'].forEach(d=>add('dealers',d,dealerFull[d]||d));
   add('mfrs','協勝發',MFR_FULL);lists.mfrs[0].def=true;
   ['SD280','SD420W','SD280W'].forEach(s=>add('specs',s));
   Object.values(TITLES).forEach(s=>add('sizes',s));
@@ -744,7 +761,7 @@ A.certPrev=()=>{certSync();const e=certCalc().err;certView(e.length?e.join('<br>
 // 範例資料（第 1 版「帶入範例」，判讀也重用這個函式）
 A.certSample=()=>{
   const o=S.cert;
-  S.cert={...certFresh(),mode:o.mode,upName:o.upName,done:o.done,no:'261007D0041',buyer:'經銷A鋼鐵有限公司',dealer:'經銷D',mfr:'協勝發',rows:[
+  S.cert={...certFresh(),mode:o.mode,upName:o.upName,done:o.done,no:'261007D0041',buyer:'經銷A鋼鐵有限公司',dealer:'立成',mfr:'協勝發',rows:[
    {proc:'電爐',furnace:'R009374',spec:'SD280',title:'D16',len:'12',bundles:'7',t:'6.930'},
    {proc:'電爐',furnace:'R009374',spec:'SD280',title:'D16',len:'14',bundles:'7',t:'7.270'},
    {proc:'電爐',furnace:'R010732',spec:'SD280',title:'D13',len:'12',bundles:'14',t:'14.460'}]};
@@ -797,65 +814,96 @@ A.certSave=()=>{
 };
 SCREENS.cert=()=>certView();
 
-// ===== 進貨清單 FR-05（第 2 版：依證明分組＋夠不夠出查詢）=====
+// ===== 進貨清單 FR-05（第 6 版：依證明分組＋夠不夠出多列查詢）=====
 S.stock={six:true,pos:true,base:todayStr()};
-S.stockQ={spec:'',size:'',kg:'',ran:false};
+S.stockQ={rows:[{spec:'',size:'',kg:''}],ran:false};
 function cutoff(base){const d=new Date(base+'T00:00:00');d.setMonth(d.getMonth()-6);const p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())}
 // 把查詢欄位目前的值存起來，重畫時不會被清掉
 function stockReadQ(){
-  const q=S.stockQ;
-  if(document.getElementById('m-stock-qs')){q.spec=val('m-stock-qs');q.size=val('m-stock-qz');q.kg=val('m-stock-qk')}
+  S.stockQ.rows.forEach((r,i)=>{
+    if(document.getElementById('m-stock-qs-'+i)){r.spec=val('m-stock-qs-'+i);r.size=val('m-stock-qz-'+i);r.kg=val('m-stock-qk-'+i)}
+  });
 }
 A.stockSet=()=>{stockReadQ();S.stock={six:document.getElementById('f6').checked,pos:document.getElementById('fp').checked,base:val('fb')||todayStr()};SCREENS.stock()};
 A.stockClear=()=>{stockReadQ();S.stock={six:false,pos:false,base:val('fb')||todayStr()};SCREENS.stock()};
+A.stockQAdd=()=>{stockReadQ();S.stockQ.rows.push({spec:'',size:'',kg:''});S.stockQ.ran=false;SCREENS.stock()};
+A.stockQDel=i=>{stockReadQ();const q=S.stockQ;if(q.rows.length<=1)return;q.rows.splice(i,1);q.ran=false;SCREENS.stock()};
 A.stockQuery=()=>{
   stockReadQ();
-  const q=S.stockQ,need=Number(q.kg);
-  if(!q.spec||!q.size||!(need>0)){
-    msg('m-stock-qmsg','未查詢：請選擇規格、尺寸，並輸入大於 0 的需要公斤數（目前：規格「'+h(q.spec||'未選')+'」、尺寸「'+h(q.size||'未選')+'」、公斤數「'+h(q.kg||'未填')+'」）。','err');
+  const q=S.stockQ,bad=[];
+  q.rows.forEach((r,i)=>{
+    if(!r.spec||!r.size||!(Number(r.kg)>0))
+      bad.push('第 '+(i+1)+' 項：規格「'+h(r.spec||'未選')+'」、尺寸「'+h(r.size||'未選')+'」、公斤數「'+h(r.kg||'未填')+'」');
+  });
+  if(bad.length){
+    msg('m-stock-qmsg','未查詢：每一項都要選擇規格、尺寸，並輸入大於 0 的需要公斤數。<br>'+bad.join('<br>'),'err');
     q.ran=false;
     const r=document.getElementById('m-stock-qres');if(r)r.innerHTML='';
     return;
   }
   q.ran=true;SCREENS.stock();
 };
-// 夠不夠出：回傳 {single:[{cert,d,rem}], combo:[{cert,items,sum}]}，兩類都依證明編號前 6 碼（日期）舊的在前
-function stockEnough(spec,size,need){
-  const single=[],combo=[];
+// 夠不夠出（多列）：回傳 {full:[...], partial:[...]}
+// 每張證明 = {cert, per:[{row,items,sum,ok,single}], okCount}；只計剩餘 > 0（remain 已排除待確認）
+// 同規格同尺寸出現在多列時，該組需求合計後再比對庫存
+// full＝每一列都夠；partial＝至少一列夠但不是全部。排序依證明編號前 6 碼（日期）舊的在前
+function stockEnough(rows){
+  const key=r=>r.spec+'|'+r.size,need={};
+  rows.forEach(r=>{need[key(r)]=(need[key(r)]||0)+Number(r.kg)});
+  const full=[],partial=[];
   DB.certs.forEach(c=>{
-    const items=c.details.filter(d=>d.spec===spec&&d.size===size).map(d=>({d,rem:remain(c,d)}));
-    if(!items.length)return;
-    const ok=items.filter(x=>x.rem>=need);
-    ok.forEach(x=>single.push({cert:c,d:x.d,rem:x.rem}));
-    if(!ok.length){
-      const sum=items.reduce((a,x)=>a+Math.max(0,x.rem),0);
-      if(sum>=need)combo.push({cert:c,items:items.filter(x=>x.rem>0),sum});
-    }
+    const per=rows.map(r=>{
+      const items=c.details.filter(d=>d.spec===r.spec&&d.size===r.size).map(d=>({d,rem:remain(c,d)})).filter(x=>x.rem>0);
+      const sum=items.reduce((a,x)=>a+x.rem,0),n=Number(r.kg);
+      return {row:r,items,sum,ok:sum>=need[key(r)],single:items.some(x=>x.rem>=n)};
+    });
+    const okCount=per.filter(p=>p.ok).length;
+    if(!okCount)return;
+    (okCount===per.length?full:partial).push({cert:c,per,okCount});
   });
   const ord=(a,b)=>a.cert.no.slice(0,6).localeCompare(b.cert.no.slice(0,6))||a.cert.no.localeCompare(b.cert.no);
-  single.sort(ord);combo.sort(ord);
-  return {single,combo};
+  full.sort(ord);
+  partial.sort((a,b)=>b.okCount-a.okCount||ord(a,b));
+  return {full,partial};
+}
+function stockQueryRow(r,i,many){
+  return '<div class="m-stock-qrow">'+
+    '<div class="ig-field"><label class="ig-label" for="m-stock-qs-'+i+'">規格</label><select class="ig-select" id="m-stock-qs-'+i+'">'+opts(activeList('specs').map(x=>x.short),r.spec,'請選擇')+'</select></div>'+
+    '<div class="ig-field"><label class="ig-label" for="m-stock-qz-'+i+'">尺寸</label><select class="ig-select" id="m-stock-qz-'+i+'">'+opts(activeList('sizes').map(x=>x.short),r.size,'請選擇')+'</select></div>'+
+    '<div class="ig-field"><label class="ig-label" for="m-stock-qk-'+i+'">需要（kg）</label><input class="ig-input ig-input-num" type="number" inputmode="numeric" min="1" step="1" id="m-stock-qk-'+i+'" value="'+h(r.kg)+'" onkeydown="if(event.key===\'Enter\')A.stockQuery()"></div>'+
+    '<div class="ig-field m-stock-qdel">'+(many?'<button class="ig-btn ig-btn-text" type="button" aria-label="刪除第 '+(i+1)+' 項" onclick="A.stockQDel('+i+')">刪除</button>':'')+'</div></div>';
+}
+function stockHitHtml(x,showCount,n){
+  const c=x.cert;
+  const lines=x.per.map(p=>{
+    const r=p.row;
+    const furn=p.items.length?p.items.map(i=>h(i.d.furnace)+'（剩 '+fmt(i.rem)+'）').join('、'):'無剩餘';
+    const lack=Math.max(0,Number(r.kg)-p.sum);
+    return '<div class="m-stock-item'+(p.ok?'':' m-stock-item-no')+'"><div class="m-stock-item-h"><span class="m-stock-item-t">'+h(r.spec)+'　'+h(r.size)+'　需要 <span class="ig-num">'+fmt(Number(r.kg))+'</span> kg</span>'+
+      (p.ok?'<span class="ig-badge ig-badge-ok">夠</span>'+(p.single?'<span class="ig-badge">單一爐號就夠</span>':'<span class="ig-badge ig-badge-warn">需多爐號合計</span>'):'<span class="ig-badge ig-badge-err">不夠</span>')+'</div>'+
+      '<div class="ig-sub m-stock-item-d">'+furn+'；合計剩 <span class="ig-num">'+fmt(p.sum)+'</span> kg'+(p.ok?'':'，缺 <span class="ig-num">'+fmt(lack)+'</span> kg')+'</div></div>';
+  }).join('');
+  return '<div class="m-stock-hit"><div class="m-stock-hit-h"><span class="m-stock-hit-no">'+h(c.no)+'</span><span class="ig-sub">'+h(c.date)+'　'+h(c.dealer)+'</span>'+
+    (showCount?'<span class="ig-badge ig-badge-warn m-stock-hit-cnt">夠 '+x.okCount+' / '+n+' 項</span>':'')+'</div>'+lines+'</div>';
 }
 function stockQueryHtml(){
-  const q=S.stockQ;
+  const q=S.stockQ,many=q.rows.length>1;
   const form='<div class="ig-card m-stock-query"><h3 class="ig-h2">夠不夠出</h3><div id="m-stock-qmsg"></div>'+
-    '<div class="m-stock-qgrid">'+
-    '<div class="ig-field"><label class="ig-label" for="m-stock-qs">規格</label><select class="ig-select" id="m-stock-qs">'+opts(activeList('specs').map(x=>x.short),q.spec,'請選擇')+'</select></div>'+
-    '<div class="ig-field"><label class="ig-label" for="m-stock-qz">尺寸</label><select class="ig-select" id="m-stock-qz">'+opts(activeList('sizes').map(x=>x.short),q.size,'請選擇')+'</select></div>'+
-    '<div class="ig-field"><label class="ig-label" for="m-stock-qk">需要（kg）</label><input class="ig-input ig-input-num" type="number" inputmode="numeric" min="1" step="1" id="m-stock-qk" value="'+h(q.kg)+'" onkeydown="if(event.key===\'Enter\')A.stockQuery()"></div>'+
-    '<div class="ig-field m-stock-qbtn"><button class="ig-btn ig-btn-primary ig-btn-block" onclick="A.stockQuery()">查詢</button></div></div>';
+    q.rows.map((r,i)=>stockQueryRow(r,i,many)).join('')+
+    '<div class="m-stock-qact"><button class="ig-btn" type="button" onclick="A.stockQAdd()">＋ 再加一項</button>'+
+    '<button class="ig-btn ig-btn-primary" type="button" onclick="A.stockQuery()">查詢</button></div>';
   let res='';
   if(q.ran){
-    const need=Number(q.kg),r=stockEnough(q.spec,q.size,need);
-    const head='<div class="ig-sub">'+h(q.spec)+'　'+h(q.size)+'　需要 <span class="ig-num">'+fmt(need)+'</span> kg；以證明明細目前剩餘計算，不受下方篩選影響。</div>';
-    if(!r.single.length&&!r.combo.length){
-      res=head+'<div class="ig-empty"><div class="ig-empty-title">沒有單張證明夠出這個量</div></div>';
+    const n=q.rows.length,r=stockEnough(q.rows);
+    const head='<div class="ig-sub">共 '+n+' 項需求；以證明明細目前剩餘計算（只計剩餘 &gt; 0、不含待確認），不受下方篩選影響。</div>';
+    const sec=(title,arr,cnt)=>'<h4 class="m-stock-sec">'+title+'（'+arr.length+'）</h4>'+arr.map(x=>stockHitHtml(x,cnt,n)).join('');
+    if(r.full.length){
+      res=head+sec('一張證明就全部夠',r.full,false);
+    }else if(r.partial.length){
+      res=head+'<div class="m-stock-note"><span class="ig-badge ig-badge-warn">沒有單張證明全部夠</span><span class="ig-sub">以下列出夠出其中至少一項的證明（夠的項數多的在前，同項數舊的在前）。</span></div>'+
+        sec('夠出部分項目的證明',r.partial,true);
     }else{
-      const line=(c,main,extra)=>'<div class="m-stock-hit"><span class="m-stock-hit-no">'+h(c.no)+'</span><span class="ig-sub">'+h(c.date)+'　'+h(c.dealer)+'</span>'+main+(extra||'')+'</div>';
-      const sec=(title,arr,fn)=>'<h4 class="m-stock-sec">'+title+'（'+arr.length+'）</h4>'+(arr.length?arr.map(fn).join(''):'<div class="ig-sub m-stock-none">無</div>');
-      res=head+
-        sec('單一爐號就夠',r.single,x=>line(x.cert,'<span class="m-stock-hit-d">爐號 '+h(x.d.furnace)+'</span>','<span class="ig-num m-stock-hit-kg">剩餘 '+fmt(x.rem)+' kg</span>'))+
-        sec('同一張證明合計才夠',r.combo,x=>line(x.cert,'<span class="m-stock-hit-d">'+x.items.map(i=>h(i.d.furnace)+'（'+fmt(i.rem)+'）').join('、')+'</span>','<span class="ig-num m-stock-hit-kg">合計 '+fmt(x.sum)+' kg</span>'));
+      res=head+'<div class="m-stock-note"><span class="ig-badge ig-badge-warn">沒有單張證明全部夠</span></div><div class="ig-empty"><div class="ig-empty-title">也沒有任何一張證明夠出其中一項</div></div>';
     }
   }
   return form+'<div id="m-stock-qres" class="m-stock-qres">'+res+'</div></div>';
@@ -956,6 +1004,14 @@ function shipDupCheck(){
   const dup=f.customer&&n&&DB.projects.some(p=>p.customer===f.customer&&p.name===n);
   box.innerHTML=dup?'<div class="ig-alert ig-alert-warn" role="status"><div><div class="ig-alert-title">這個客戶已有同名工程「'+h(n)+'」；仍可存檔，會另外建立一個新工程。</div></div></div>':'';
 }
+// 改名時的同名提示：同客戶底下，排除這個工程本身；只提示不擋
+const shipEditDupHit=(p,n)=>!!n&&DB.projects.some(x=>x.id!==p.id&&x.customer===p.customer&&x.name===n);
+function shipEditDupCheck(){
+  const box=document.getElementById('s_editDup');if(!box)return;
+  const s=curSlip(),p=s&&DB.projects.find(x=>x.id===s.project);if(!p){box.innerHTML='';return}
+  const n=String(val('s_editName')||'').trim();
+  box.innerHTML=shipEditDupHit(p,n)?'<div class="ig-alert ig-alert-warn" role="status"><div><div class="ig-alert-title">這個客戶已有同名工程「'+h(n)+'」；仍可存檔。</div></div></div>':'';
+}
 
 A.shipChg=(k)=>{shipSync();const f=S.ship;
   if(k==='spec'){f.size='';f.pick=''}           // 換規格：清空尺寸與已選明細
@@ -997,17 +1053,27 @@ A.shipDel=(id)=>{
   if(S.ship.slipId===id){S.ship.slipId='';S.ship.pick=''}
   route();toast('已刪除出貨單，明細重量已回到餘額');
 };
-// 修改這張單的工程業主、監造單位（工程資料；同工程的其他已列印出貨單也會取消勾選）
+// 修改這張單的工程名稱、業主、監造單位（工程資料；同工程的其他已列印出貨單也會取消勾選）
 A.shipProjSave=()=>{
   const s=curSlip();if(!s)return;const p=DB.projects.find(x=>x.id===s.project);if(!p)return;
-  const ow=val('s_editOwner'),su=val('s_editSup');
-  if((p.owner&&!ow)||(p.sup&&!su))return shipView('業主、監造單位不能改成空白。');
-  if(ow===(p.owner||'')&&su===(p.sup||''))return shipView('業主、監造單位沒有變動。');
+  const nm=String(val('s_editName')||'').trim(),ow=val('s_editOwner'),su=val('s_editSup');
+  const e=[];
+  if(!nm)e.push('工程名稱不能空白。');
+  if((p.owner&&!ow)||(p.sup&&!su))e.push('業主、監造單位不能改成空白。');
+  if(e.length)return shipView(e.join('<br>'));
+  const oldName=p.name;
+  if(nm===oldName&&ow===(p.owner||'')&&su===(p.sup||''))return shipView('工程名稱、業主、監造單位沒有變動。');
+  let warn='';
+  if(nm!==oldName){
+    if(shipEditDupHit(p,nm))warn='這個客戶已有同名工程「'+nm+'」，仍已改名。';
+    writeLog('出貨單 '+s.id+' 工程名稱',oldName,nm);p.name=nm;
+  }
   if(ow!==(p.owner||'')){writeLog('出貨單 '+s.id+' 工程業主（'+p.name+'）',p.owner||'（未填）',ow||'（未填）');p.owner=ow}
   if(su!==(p.sup||'')){writeLog('出貨單 '+s.id+' 監造單位（'+p.name+'）',p.sup||'（未填）',su||'（未填）');p.sup=su}
   const un=shipUnprintOnChange(s);
   DB.slips.forEach(x=>{if(x!==s&&x.project===p.id&&shipIsPrinted(x)){x.printed=false;writeLog('出貨單 '+x.id+' 列印狀態','已列印','未列印')}});
-  save();shipView('已修改工程業主、監造單位，並寫入修改紀錄。'+(un?SHIP_REPRINT_MSG+'。':''),'ok');
+  save();if(warn)toast(warn);
+  shipView('已修改工程資料，並寫入修改紀錄。'+(un?SHIP_REPRINT_MSG+'。':''),'ok');
 };
 function candidates(spec,size){return allDetails().filter(x=>x.d.spec===spec&&x.d.size===size).map(x=>({...x,rem:remain(x.cert,x.d)})).filter(x=>x.rem>0).sort((a,b)=>a.cert.no.slice(0,6).localeCompare(b.cert.no.slice(0,6))||a.cert.no.localeCompare(b.cert.no))}
 // 該規格目前有剩餘 > 0 的尺寸（依清單維護的順序）
@@ -1059,6 +1125,7 @@ function shipMark(m){
     ['大於 0 的公斤數','s_kg','重量需大於 0'],
     ['超過剩餘數量，剩餘','s_kg',over?'最多 '+over[1]+' kg':'超過剩餘數量'],['重量要大於 0','e_'+shipErrRow,'重量需大於 0'],
     ['超過剩餘數量，剩餘','e_'+shipErrRow,over?'最多 '+over[1]+' kg':'超過剩餘數量'],
+    ['工程名稱不能空白','s_editName','工程名稱不能空白'],
     ['不能改成空白','s_editOwner','不能改成空白']];
   let first=null;
   map.forEach(([k,id,t])=>{
@@ -1099,10 +1166,12 @@ function shipView(m,cls){
     const p=proj(s.project),pr=shipIsPrinted(s);
     g+='<div class="ig-card"><p class="ig-card-title">'+h(s.date)+'　'+h(s.customer)+'　'+shipPrintBadge(s)+'</p><div class="ig-card-line"><span>工程</span><span>'+h(p.name)+'</span></div>'+
      '<div class="ig-form-row m-ship-projedit">'+
+     '<div class="ig-field m-ship-editname"><label class="ig-label ig-label-req" for="s_editName">工程名稱</label><input class="ig-input" id="s_editName" value="'+h(p.name)+'" oninput="shipEditDupCheck()"></div>'+
      '<div class="ig-field"><label class="ig-label" for="s_editOwner">業主</label><select class="ig-select" id="s_editOwner">'+opts(shipOptCur('owners',p.owner),p.owner||'','（未填）')+'</select></div>'+
      '<div class="ig-field"><label class="ig-label" for="s_editSup">監造單位</label><select class="ig-select" id="s_editSup">'+opts(shipOptCur('supervisors',p.sup),p.sup||'','（未填）')+'</select></div></div>'+
-     '<div class="ig-btn-row m-ship-actions"><button class="ig-btn ig-btn-sm" onclick="A.shipProjSave()">儲存業主／監造</button></div>'+
-     '<p class="ig-field-hint">業主、監造單位屬於工程資料；同工程的其他出貨單也會一併更新。修改後已列印的會取消勾選。</p>'+
+     '<div id="s_editDup" class="m-ship-editdup"></div>'+
+     '<div class="ig-btn-row m-ship-actions"><button class="ig-btn ig-btn-sm" onclick="A.shipProjSave()">儲存工程資料</button></div>'+
+     '<p class="ig-field-hint">工程名稱、業主、監造單位屬於工程資料；同工程的其他出貨單也會一併更新。修改後已列印的會取消勾選。</p>'+
      '<div class="ig-card-line"><span>列印</span><label class="ig-check m-ship-print"><input type="checkbox" id="s_printed"'+(pr?' checked':'')+' onchange="A.shipPrinted(\''+s.id+'\',this.checked,\'ship\')"><span>已列印</span></label></div>'+
      '<div class="ig-card-actions"><button class="ig-btn ig-btn-sm" onclick="A.shipClose()">換一張出貨單</button><button class="ig-btn ig-btn-sm" onclick="go(\'out\');S.out.slipId=\''+s.id+'\';SCREENS.out()">前往產出</button>'+shipDelBtn(s)+'</div></div>';
   }
@@ -1250,7 +1319,7 @@ SCREENS.pend=()=>{
 };
 
 // ===== 出貨報表（Excel 2003 XML 試算表）=====
-if(!NAV.some(x=>x[0]==='report'))NAV.splice(3,0,['report','出貨報表']);
+if(!NAV.some(x=>x[0]==='report'))NAV.splice(NAV.findIndex(x=>x[0]==='stock')+1,0,['report','出貨報表']);
 FRAME_ICON.report='<path d="M6 3h9l4 4v14H6z"/><path d="M15 3v4h4"/><path d="M9 12h7M9 16h7M9 20h4"/>';
 const reportHead=['編號','出廠日期','製造商','規格','尺寸','爐號','重量'];
 const reportYM=d=>d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0');
@@ -1342,6 +1411,7 @@ SCREENS.report=()=>{
 // ===== 產出 FR-11～FR-15 =====
 S.out={slipId:'',names:{},tab:'unprinted',q:'',shown:10};
 const OUT_PAGE=10;
+const OUT_REMIND='請一起印製「協勝發送審資料」';
 A.outPick=id=>{S.out.slipId=(typeof id==='string')?id:val('o_slip');S.out.names={};SCREENS.out();if(S.out.slipId)window.scrollTo(0,0)};
 A.outBack=()=>{S.out.slipId='';S.out.names={};SCREENS.out()};
 A.outTab=t=>{S.out.tab=t;S.out.shown=OUT_PAGE;SCREENS.out()};
@@ -1349,11 +1419,24 @@ A.outSearch=()=>{S.out.q=val('o_q');S.out.shown=OUT_PAGE;outListRender()};
 A.outMore=()=>{S.out.shown+=OUT_PAGE;outListRender()};
 A.outPrinted=(id,on)=>{const s=DB.slips.find(x=>x.id===id);if(!s)return;const was=s.printed===true;if(was===!!on)return;s.printed=!!on;save();writeLog('出貨單 '+s.id+' 列印狀態',was?'已列印':'未列印',on?'已列印':'未列印');outListRender()};
 A.outNames=()=>{['cover','rec','cert'].forEach(k=>S.out.names[k]=val('o_n_'+k))};
-A.outPrint=which=>{A.outNames();document.querySelectorAll('.doc').forEach(e=>e.classList.toggle('noprint',which!=='all'&&e.dataset.k!==which));const t=document.title;document.title=S.out.names[which==='all'?'cover':which]||t;window.print();document.title=t;document.querySelectorAll('.doc').forEach(e=>e.classList.remove('noprint'));toast('已呼叫列印（正式版會下載 PDF）')};
+// 按產出鈕：先跳提醒視窗，按「知道了，繼續產出」才進入原本的產出流程（outDoPrint）
+A.outPrint=which=>{
+  A.outRemindClose();
+  const ov=document.createElement('div');
+  ov.className='ig-overlay noprint m-out-noprint';ov.id='m-out-remind';
+  ov.innerHTML='<div class="ig-dialog" role="dialog" aria-modal="true" aria-labelledby="m-out-remind-t"><h3 class="ig-dialog-title" id="m-out-remind-t">提醒</h3><div class="ig-sub m-out-remind-text">'+OUT_REMIND+'</div><div class="ig-dialog-actions"><button class="ig-btn" id="m-out-remind-cancel" onclick="A.outRemindClose()">取消</button><button class="ig-btn ig-btn-primary" id="m-out-remind-ok" data-k="'+h(which)+'" onclick="A.outRemindGo(this.getAttribute(\'data-k\'))">知道了，繼續產出</button></div></div>';
+  ov.addEventListener('click',e=>{if(e.target===ov)A.outRemindClose()});
+  ov.addEventListener('keydown',e=>{if(e.key==='Escape')A.outRemindClose()});
+  document.body.appendChild(ov);
+  document.getElementById('m-out-remind-ok').focus();
+};
+A.outRemindClose=()=>{const e=document.getElementById('m-out-remind');if(e)e.remove()};
+A.outRemindGo=which=>{A.outRemindClose();outDoPrint(which)};
+function outDoPrint(which){A.outNames();document.querySelectorAll('.doc').forEach(e=>e.classList.toggle('noprint',which!=='all'&&e.dataset.k!==which));const t=document.title;document.title=S.out.names[which==='all'?'cover':which]||t;window.print();document.title=t;document.querySelectorAll('.doc').forEach(e=>e.classList.remove('noprint'));toast('已呼叫列印（正式版會下載 PDF）')}
 function outMissing(s){
   const m=[],p=proj(s.project),c=cust(s.customer);
-  if(!p.owner)m.push('工程「'+h(p.name)+'」缺業主（到「清單維護→工程」補）');
-  if(!p.sup)m.push('工程「'+h(p.name)+'」缺監造單位（到「清單維護→工程」補）');
+  if(!p.owner)m.push('工程「'+h(p.name)+'」缺業主（到「出貨單」畫面補）');
+  if(!p.sup)m.push('工程「'+h(p.name)+'」缺監造單位（到「出貨單」畫面補）');
   if(!c.full||c.full===c.short)m.push('客戶「'+h(c.short)+'」缺全名（到「清單維護→客戶」補）');
   [...new Set(s.items.filter(i=>i.status==='正常').map(i=>i.cert))].forEach(no=>{const ce=DB.certs.find(x=>x.no===no);if(!ce||!ce.file)m.push('證明 '+h(no)+' 缺原廠證明檔（FR-04 上傳）')});
   return m;
@@ -1414,6 +1497,8 @@ SCREENS.out=()=>{
   g+='<div class="m-out-noprint noprint"><p class="ig-sub">下方文字可直接在預覽上修改（只影響這次產出，不回寫資料）。檔名可修改。</p><div class="ig-form-row">'+
    [['cover','_封面'],['rec','_出貨紀錄'],['cert','_原廠證明']].map(([k,suf])=>'<div class="ig-field"><label class="ig-label" for="o_n_'+k+'">'+({cover:'封面',rec:'出貨紀錄＋標籤',cert:'原廠證明＋副聯'})[k]+' 檔名（.pdf）</label><input id="o_n_'+k+'" class="ig-input" value="'+dn(k,suf)+'" onchange="A.outNames()"></div>').join('')+
    '</div>'+outPrintBtns(false)+'</div>';
+  // 預覽區上方常駐提示（系統不產生協勝發送審資料）
+  g+='<div class="ig-alert ig-alert-warn m-out-noprint noprint m-out-remind-bar" role="note"><div class="ig-alert-title">'+OUT_REMIND+'</div></div>';
   // 封面
   g+='<div class="doc m-out-doc" data-k="cover"><p class="ig-sub m-out-noprint noprint">封面（A4 直式）</p><div class="m-out-scroll"><div class="m-out-paper m-out-a4p m-out-cover">'+
    '<div class="m-out-cover-proj" contenteditable>'+h(pn)+'</div><div class="m-out-cover-title" contenteditable>鋼筋　送審資料</div>'+
