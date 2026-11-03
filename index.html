@@ -1019,6 +1019,7 @@ SCREENS.stock=()=>{
    list+'</div>';
 };
 
+function shipsD0(){const d=new Date();d.setDate(d.getDate()-30);return d.toISOString().slice(0,10)}
 // ===== 出貨 FR-02、FR-06、FR-07、FR-08、FR-09（第 10 版：只顯示夠的＋每個爐號一行＋出貨單清單改整列可點）=====
 // rows＝新增明細的多列表單；cert＝選定的證明編號；pv＝預覽每列的 {fu 爐號, kg 公斤}，以 rows 的索引為 key
 S.ship={date:todayStr(),customer:'',custQ:'',custAt:0,proj:'',slipId:'',spec:'',size:'',pick:'',m1:'',m2:'',rows:[{spec:'',size:'',kg:''}],cert:'',pv:{}};
@@ -1404,30 +1405,28 @@ SCREENS.ship=()=>shipView();
 function shipPrintBadge(s){return '<span class="ig-badge'+(shipIsPrinted(s)?' ig-badge-ok':' ig-badge-warn')+'">'+(shipIsPrinted(s)?'已列印':'未列印')+'</span>'}
 
 // ===== 出貨單清單與修改紀錄 FR-06a、FR-09 =====
-S.ships={c:'',p:'',n:'',logq:'',unp:false};
-A.shipsF=()=>{const u=document.getElementById('q_u');S.ships={c:val('q_c'),p:val('q_p'),n:val('q_n'),logq:val('q_l'),unp:u?u.checked:!!S.ships.unp};SCREENS.ships()};
-A.shipsClear=()=>{S.ships={c:'',p:'',n:'',logq:'',unp:false};SCREENS.ships()};
+S.ships={c:'',p:'',n:'',logq:'',unp:false,d0:shipsD0(),d1:todayStr()};
+A.shipsF=()=>{const u=document.getElementById('q_u');S.ships={c:val('q_c'),p:val('q_p'),n:val('q_n'),logq:'',unp:u?u.checked:!!S.ships.unp,d0:val('q_d0'),d1:val('q_d1')};SCREENS.ships()};
+A.shipsClear=()=>{S.ships={c:'',p:'',n:'',logq:'',unp:false,d0:shipsD0(),d1:todayStr()};SCREENS.ships()};
 A.slipOpen=id=>{S.ship.slipId=id;S.ship.pick='';go('ship')};
 // 清單整列可點開啟；Enter 也可（只在焦點在列本身時），列印格不觸發開啟
 A.shipsRowKey=(ev,id)=>{if(ev.key==='Enter'&&ev.target===ev.currentTarget){ev.preventDefault();A.slipOpen(id)}};
 SCREENS.ships=()=>{
   const q=S.ships;
-  const filtered=!!(q.c||q.p||q.n||q.unp);
-  const rows=DB.slips.filter(s=>(!q.c||s.customer===q.c)&&(!q.p||proj(s.project).name.includes(q.p))&&(!q.n||s.items.some(i=>i.cert.includes(q.n.trim())))&&(!q.unp||!shipIsPrinted(s))).sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id));
-  const lg=DB.log.filter(l=>!q.logq||(l.target+l.who).includes(q.logq));
+  const filtered=!!(q.c||q.p||q.n||q.unp||q.d0!==shipsD0()||q.d1!==todayStr());
+  const rows=DB.slips.filter(s=>(!q.d0||s.date>=q.d0)&&(!q.d1||s.date<=q.d1)&&(!q.c||s.customer===q.c)&&(!q.p||proj(s.project).name.includes(q.p))&&(!q.n||s.items.some(i=>i.cert.includes(q.n.trim())))&&(!q.unp||!shipIsPrinted(s))).sort((a,b)=>b.date.localeCompare(a.date)||b.id.localeCompare(a.id));
   document.getElementById('main').innerHTML='<div class="m-ship-wrap"><h2 class="ig-h2">出貨單清單（FR-06a）</h2><div class="ig-card"><div class="ig-form-row">'+
+   '<div class="ig-field"><label class="ig-label" for="q_d0">起日</label><input type="date" class="ig-input" id="q_d0" value="'+h(q.d0||'')+'" onchange="A.shipsF()"></div>'+
+   '<div class="ig-field"><label class="ig-label" for="q_d1">迄日</label><input type="date" class="ig-input" id="q_d1" value="'+h(q.d1||'')+'" onchange="A.shipsF()"></div>'+
    '<div class="ig-field"><label class="ig-label" for="q_c">客戶</label><select class="ig-select" id="q_c" onchange="A.shipsF()">'+opts(DB.lists.customers.map(c=>c.short),q.c,'（全部）')+'</select></div>'+
    '<div class="ig-field"><label class="ig-label" for="q_p">工程名稱含</label><input class="ig-input" id="q_p" value="'+h(q.p)+'" onchange="A.shipsF()"></div>'+
    '<div class="ig-field"><label class="ig-label" for="q_n">證明編號含</label><input class="ig-input" id="q_n" value="'+h(q.n)+'" onchange="A.shipsF()"></div></div>'+
    '<label class="ig-check m-ship-unp"><input type="checkbox" id="q_u"'+(q.unp?' checked':'')+' onchange="A.shipsF()"><span>只看未列印</span></label>'+
-   '<p class="ig-field-hint">依日期倒序，共 '+rows.length+' 張。點一列打開該出貨單；未列印的出貨單可在出貨單畫面內刪除，已列印的只能修改。</p></div>'+
+   '<p class="ig-field-hint">預設顯示近一個月（今天往前 30 天），依日期倒序，共 '+rows.length+' 張。點一列打開該出貨單；未列印的出貨單可在出貨單畫面內刪除，已列印的只能修改。</p></div>'+
    (rows.length?'<div class="ig-table-wrap m-ship-list"><table class="ig-table"><thead><tr><th>日期</th><th>客戶</th><th>工程</th><th>列印</th></tr></thead><tbody>'+
     rows.map(s=>'<tr class="m-ship-row" tabindex="0" aria-label="開啟出貨單 '+h(s.date)+' '+h(s.customer)+'" onclick="A.slipOpen(\''+s.id+'\')" onkeydown="A.shipsRowKey(event,\''+s.id+'\')"><td>'+h(s.date)+'</td><td>'+h(s.customer)+'</td><td class="m-ship-proj">'+h(proj(s.project).name)+'</td><td class="m-ship-pcell" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()"><div class="m-ship-printcell">'+shipPrintBadge(s)+'<label class="ig-check m-ship-print"><input type="checkbox" id="p_'+s.id+'"'+(shipIsPrinted(s)?' checked':'')+' onchange="A.shipPrinted(\''+s.id+'\',this.checked,\'ships\')"><span>已列印</span></label></div></td></tr>').join('')+'</tbody></table></div>'
    :'<div class="ig-empty"><div class="ig-empty-title">'+(filtered?'找不到符合的資料':'還沒有出貨單')+'</div><div>'+(filtered?'換個條件再試一次':'先到出貨建立一張出貨單')+'</div>'+(filtered?'<button class="ig-btn" onclick="A.shipsClear()">清除篩選</button>':'<button class="ig-btn ig-btn-primary" onclick="go(\'ship\')">前往出貨</button>')+'</div>')+
-   '<h3 class="ig-h2 m-ship-sec">修改紀錄（FR-09）</h3><div class="ig-field"><label class="ig-label" for="q_l">篩選（帳號或對象）</label><input class="ig-input" id="q_l" value="'+h(q.logq)+'" onchange="A.shipsF()"></div>'+
-   (lg.length?'<div class="ig-table-wrap"><table class="ig-table ig-table-stack"><thead><tr><th>誰</th><th>何時</th><th>哪一筆</th><th>修改前</th><th>修改後</th></tr></thead><tbody>'+
-    lg.map(l=>'<tr><td data-label="誰">'+h(l.who)+'</td><td data-label="何時">'+h(l.when)+'</td><td data-label="哪一筆">'+h(l.target)+'</td><td data-label="修改前">'+h(l.before)+'</td><td data-label="修改後">'+h(l.after)+'</td></tr>').join('')+'</tbody></table></div>'
-   :'<div class="ig-empty"><div class="ig-empty-title">尚無紀錄</div><div>到出貨單修改一筆重量即會出現「修改前 → 修改後」。</div></div>')+'</div>';
+   '</div>';
 };
 
 // ===== 清單維護 FR-01（第 5 版：無工程分頁、含關鍵字搜尋）=====
@@ -1653,6 +1652,9 @@ SCREENS.log=()=>{
    '<div id="lg_list"></div>';
   logRender();
 };
+
+// 需求方 2026-11-03：移除「待確認清單」頁（舊資料搬移後為 0 筆，系統出貨不會產生待確認）
+{const k=NAV.findIndex(x=>x[0]==='pend');if(k>=0)NAV.splice(k,1)}
 
 // ===== 產出 FR-11～FR-15 =====
 S.out={slipId:'',names:{},tab:'unprinted',q:'',shown:10};
