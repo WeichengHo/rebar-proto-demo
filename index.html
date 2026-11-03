@@ -320,13 +320,13 @@ input[type="date"].ig-input::-webkit-date-and-time-value{text-align:left;margin:
 .m-stock-hit{padding:var(--ig-sp-2) 0;border-top:1px solid var(--ig-line-soft)}
 .m-stock-hit-h{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:var(--ig-sp-3);row-gap:var(--ig-sp-1)}
 .m-stock-hit-no{font-size:var(--ig-fs-lg);font-weight:var(--ig-fw-semi);overflow-wrap:anywhere}
-.m-stock-hit-cnt{margin-left:auto}
-/* 每項一列，字體與證明編號同為 --ig-fs-lg；窄螢幕自動換行 */
+/* 每個爐號一行「尺寸　爐號　剩 N kg」，字體與證明編號同為 --ig-fs-lg；窄螢幕自動換行 */
 .m-stock-item{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:var(--ig-sp-3);row-gap:2px;padding:var(--ig-sp-1) 0 var(--ig-sp-1) var(--ig-sp-3);font-size:var(--ig-fs-lg);min-width:0}
 .m-stock-item-sz{font-weight:var(--ig-fw-semi)}
 .m-stock-item-sum{font-weight:var(--ig-fw-semi)}
 .m-stock-item-f{min-width:0;overflow-wrap:anywhere}
-.m-stock-item-lack{color:var(--ig-danger);font-weight:var(--ig-fw-semi);white-space:nowrap}
+.m-stock-use{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ig-sp-3);margin-top:var(--ig-sp-2)}
+.m-stock-use .ig-btn{min-height:44px}
 .m-stock-groups{display:flex;flex-direction:column;gap:var(--ig-sp-3)}
 .m-stock-group{padding:var(--ig-sp-3) var(--ig-sp-4)}
 .m-stock-ghead{display:flex;flex-wrap:wrap;justify-content:space-between;align-items:flex-start;gap:var(--ig-sp-2)}
@@ -344,10 +344,11 @@ input[type="date"].ig-input::-webkit-date-and-time-value{text-align:left;margin:
   .m-stock-gsum{align-items:baseline;flex-direction:row;gap:var(--ig-sp-2)}
   .m-stock-table th,.m-stock-table td{padding-left:var(--ig-sp-2);padding-right:var(--ig-sp-2)}
   .m-stock-item{padding-left:0}
+  .m-stock-use .ig-btn{width:100%}
 }
 
 /* ship 模組：只寫版面，顏色與字級取自 tokens.css */
-.m-ship-wrap{padding-bottom:var(--ig-sp-4)}
+.m-ship-wrap{padding-bottom:var(--ig-sp-4);min-width:0;max-width:100%}
 .m-ship-sec{margin-top:var(--ig-sp-5)}
 .m-ship-actions{justify-content:flex-end;margin-top:var(--ig-sp-2)}
 .m-ship-actions .ig-btn{min-height:var(--ig-touch-min)}
@@ -363,7 +364,7 @@ input[type="date"].ig-input::-webkit-date-and-time-value{text-align:left;margin:
 .m-ship-cand .ig-card-line{display:flex}
 .m-ship-print{min-height:var(--ig-touch-min)}
 .m-ship-unp{margin-top:var(--ig-sp-2)}
-.m-ship-printcell{display:flex;align-items:center;gap:var(--ig-sp-3);flex-wrap:wrap;justify-content:flex-end}
+.m-ship-printcell{display:flex;align-items:center;gap:var(--ig-sp-3);flex-wrap:nowrap;justify-content:flex-start}
 .m-ship-combo{position:relative}
 .m-ship-cust-list{position:absolute;left:0;right:0;top:100%;z-index:5;max-height:280px;overflow-y:auto;background:var(--ig-bg);border:1px solid var(--ig-line);border-radius:var(--ig-r-md);box-shadow:0 4px 12px rgba(0,0,0,.12)}
 .m-ship-cust-opt{display:flex;align-items:center;min-height:var(--ig-touch-min);padding:0 var(--ig-sp-3);cursor:pointer}
@@ -376,6 +377,41 @@ input[type="date"].ig-input::-webkit-date-and-time-value{text-align:left;margin:
 .m-ship-editdup:empty{display:none}
 .m-ship-editdup{margin-top:var(--ig-sp-2)}
 .ig-card-actions .m-ship-nodel{text-align:left}
+/* 出貨單清單：手機也用表格，容器內左右滑動，第一欄（日期）固定；整列可點 */
+.m-ship-list{overflow-x:auto;max-width:100%;-webkit-overflow-scrolling:touch}
+.m-ship-list .ig-table{min-width:560px;width:100%}
+.m-ship-list th,.m-ship-list td{white-space:nowrap}
+.m-ship-list td.m-ship-proj{white-space:normal;min-width:180px}
+.m-ship-list th:first-child,.m-ship-list td:first-child{position:sticky;left:0;z-index:1;background:var(--ig-bg)}
+.m-ship-row{cursor:pointer}
+.m-ship-row:hover td{background:var(--ig-bg-hover)}
+.m-ship-row:focus-visible{outline:2px solid var(--ig-line);outline-offset:-2px}
+.m-ship-pcell .ig-check{min-height:var(--ig-touch-min)}
+/* 新增明細多列表單 */
+.m-ship-qrow{display:grid;grid-template-columns:repeat(3,minmax(0,1fr)) 64px;column-gap:var(--ig-sp-3);align-items:end}
+.m-ship-qrow .ig-select,.m-ship-qrow .ig-input{min-width:0;max-width:100%}
+.m-ship-qdel{justify-content:flex-end}
+.m-ship-qdel .ig-btn{min-height:var(--ig-touch-min)}
+.m-ship-qact{display:flex;flex-wrap:wrap;gap:var(--ig-sp-2);justify-content:space-between;margin-top:var(--ig-sp-2)}
+.m-ship-qact .ig-btn{min-height:var(--ig-touch-min)}
+.m-ship-certwrap{margin-top:var(--ig-sp-3)}
+.m-ship-sec2{margin:var(--ig-sp-4) 0 var(--ig-sp-1);font-size:var(--ig-fs-md);font-weight:var(--ig-fw-semi)}
+.m-ship-note{display:flex;flex-wrap:wrap;align-items:center;gap:var(--ig-sp-2);margin:var(--ig-sp-3) 0 var(--ig-sp-1)}
+.m-ship-certs{display:flex;flex-direction:column;gap:var(--ig-sp-2);margin-top:var(--ig-sp-2)}
+.m-ship-cert{display:block;width:100%;min-width:0;text-align:left;font:inherit;color:inherit;cursor:pointer;min-height:var(--ig-touch-min)}
+.m-ship-cert-h{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:var(--ig-sp-3);row-gap:var(--ig-sp-1)}
+.m-ship-cert-no{font-size:var(--ig-fs-lg);font-weight:var(--ig-fw-semi);overflow-wrap:anywhere}
+/* 每個爐號一行「尺寸　爐號　剩 N kg」，字體維持 --ig-fs-lg */
+.m-ship-line{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:var(--ig-sp-3);row-gap:2px;padding:var(--ig-sp-1) 0;min-width:0;font-size:var(--ig-fs-lg)}
+.m-ship-line-sz,.m-ship-line-sum{font-weight:var(--ig-fw-semi)}
+.m-ship-line-f{min-width:0;overflow-wrap:anywhere}
+.m-ship-preview{margin-top:var(--ig-sp-4);padding-top:var(--ig-sp-3);border-top:1px solid var(--ig-line-soft)}
+.m-ship-pv-row{display:grid;grid-template-columns:72px minmax(0,1fr) 140px;column-gap:var(--ig-sp-3);align-items:end;padding:var(--ig-sp-2) 0}
+.m-ship-pv-sz{display:flex;flex-direction:column}
+.m-ship-pv-f{min-width:0;overflow-wrap:anywhere;align-self:center}
+.m-ship-pv-fs{border:0;margin:0;padding:0;min-width:0}
+.m-ship-pv-fs .ig-check{min-height:var(--ig-touch-min)}
+.m-ship-pv-kg{min-width:0}
 @media (max-width:767px){
   .m-ship-edit{width:100%;max-width:160px}
   .m-ship-proj{min-width:0}
@@ -383,6 +419,11 @@ input[type="date"].ig-input::-webkit-date-and-time-value{text-align:left;margin:
   .m-ship-actions .ig-btn{width:100%}
   .m-ship-rowact{justify-content:flex-start}
   .m-ship-nodel{text-align:left}
+  .m-ship-qrow{grid-template-columns:minmax(0,1fr) minmax(0,1fr)}
+  .m-ship-qrow .ig-field:nth-child(3){grid-column:1/-1}
+  .m-ship-qdel{grid-column:1/-1;justify-content:flex-start}
+  .m-ship-pv-row{grid-template-columns:minmax(0,1fr) 120px}
+  .m-ship-pv-f{grid-column:1/-1;grid-row:2}
 }
 
 /* 模組 lists：清單維護 FR-01、待確認清單 FR-17、出貨報表、修改紀錄 */
@@ -842,7 +883,7 @@ A.certSave=()=>{
 };
 SCREENS.cert=()=>certView();
 
-// ===== 進貨清單 FR-05（第 7 版：依證明分組＋多尺寸查庫存多列查詢）=====
+// ===== 進貨清單 FR-05（第 10 版：只顯示夠的＋每個爐號一行＋依證明分組＋「用這張出貨」）=====
 S.stock={six:true,pos:true,base:todayStr()};
 S.stockQ={rows:[{spec:'',size:'',kg:''}],ran:false};
 function cutoff(base){const d=new Date(base+'T00:00:00');d.setMonth(d.getMonth()-6);const p=n=>String(n).padStart(2,'0');return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate())}
@@ -872,10 +913,18 @@ A.stockQuery=()=>{
   }
   q.ran=true;SCREENS.stock();
 };
+// 用這張出貨：依「目前顯示的查詢結果」（S.stockQ.rows，不重讀欄位）找出該證明，只帶入夠的項目，交給出貨頁
+A.stockUse=no=>{
+  const r=stockEnough(S.stockQ.rows),x=r.full.concat(r.partial).find(y=>y.cert.no===no);
+  if(!x)return toast('找不到這張證明的查詢結果，請重新查詢。',true);
+  S.shipPrefill={cert:x.cert.no,rows:x.per.filter(p=>p.ok).map(p=>({spec:p.row.spec,size:p.row.size,kg:Number(p.row.kg)}))};
+  location.hash='#ship';
+};
 // 多尺寸查庫存（多列）：回傳 {full:[...], partial:[...]}
 // 每張證明 = {cert, per:[{row,items,sum,ok,single}], okCount}；只計剩餘 > 0（remain 已排除待確認）
 // 同規格同尺寸出現在多列時，該組需求合計後再比對庫存
 // full＝每一列都夠；partial＝至少一列夠但不是全部。排序依證明編號前 6 碼（日期）舊的在前
+// （ship.js 也會呼叫；畫面端一律只顯示 ok 的項目）
 function stockEnough(rows){
   const key=r=>r.spec+'|'+r.size,need={};
   rows.forEach(r=>{need[key(r)]=(need[key(r)]||0)+Number(r.kg)});
@@ -902,20 +951,16 @@ function stockQueryRow(r,i,many){
     '<div class="ig-field"><label class="ig-label" for="m-stock-qk-'+i+'">需要（kg）</label><input class="ig-input ig-input-num" type="number" inputmode="numeric" min="1" step="1" id="m-stock-qk-'+i+'" value="'+h(r.kg)+'" onkeydown="if(event.key===\'Enter\')A.stockQuery()"></div>'+
     '<div class="ig-field m-stock-qdel">'+(many?'<button class="ig-btn ig-btn-text" type="button" aria-label="刪除第 '+(i+1)+' 項" onclick="A.stockQDel('+i+')">刪除</button>':'')+'</div></div>';
 }
-// 每項一列：尺寸短碼＋合計剩在前，爐號明細在後；不夠的在列尾標紅色「不夠，缺 N kg」
-function stockHitHtml(x,showCount,n){
+// 只列夠的項目：每個爐號一行「尺寸　爐號　剩 N kg」；不夠的項目整列不顯示
+// 標題列右側加主按鈕「用這張出貨」；部分符合的證明只帶入夠的那幾項
+function stockHitHtml(x){
   const c=x.cert;
-  const lines=x.per.map(p=>{
-    const r=p.row;
-    const furn=p.items.length?p.items.map(i=>h(i.d.furnace)+' 剩 '+fmt(i.rem)).join('、'):'無剩餘';
-    const lack=Math.max(0,Number(r.kg)-p.sum);
-    return '<div class="m-stock-item'+(p.ok?'':' m-stock-item-no')+'"><span class="m-stock-item-sz">'+h(r.size)+'</span>'+
-      '<span class="m-stock-item-sum">合計剩 <span class="ig-num">'+fmt(p.sum)+'</span> kg</span>'+
-      '<span class="m-stock-item-f">'+furn+'</span>'+
-      (p.ok?'':'<span class="m-stock-item-lack">不夠，缺 <span class="ig-num">'+fmt(lack)+'</span> kg</span>')+'</div>';
-  }).join('');
-  return '<div class="m-stock-hit"><div class="m-stock-hit-h"><span class="m-stock-hit-no">'+h(c.no)+'</span><span class="ig-sub">'+h(c.date)+'　'+h(c.dealer)+'</span>'+
-    (showCount?'<span class="ig-badge ig-badge-warn m-stock-hit-cnt">夠 '+x.okCount+' / '+n+' 項</span>':'')+'</div>'+lines+'</div>';
+  const lines=x.per.filter(p=>p.ok).map(p=>p.items.map(i=>
+    '<div class="m-stock-item"><span class="m-stock-item-sz">'+h(p.row.size)+'</span>'+
+    '<span class="m-stock-item-f">'+h(i.d.furnace)+'</span>'+
+    '<span class="m-stock-item-sum">剩 <span class="ig-num">'+fmt(i.rem)+'</span> kg</span></div>').join('')).join('');
+  return '<div class="m-stock-hit"><div class="m-stock-hit-h"><span class="m-stock-hit-no">'+h(c.no)+'</span><span class="ig-sub">'+h(c.date)+'　'+h(c.dealer)+'</span></div>'+lines+
+    '<div class="m-stock-use"><button class="ig-btn ig-btn-primary" type="button" data-cert="'+h(c.no)+'" onclick="A.stockUse(this.getAttribute(\'data-cert\'))">用這張出貨</button></div></div>';
 }
 function stockQueryHtml(){
   const q=S.stockQ,many=q.rows.length>1;
@@ -926,16 +971,15 @@ function stockQueryHtml(){
     '<button class="ig-btn ig-btn-primary" type="button" onclick="A.stockQuery()">查詢</button></div>';
   let res='';
   if(q.ran){
-    const n=q.rows.length,r=stockEnough(q.rows);
-    const head='<div class="ig-sub">共 '+n+' 項需求；以證明明細目前剩餘計算（只計剩餘 &gt; 0、不含待確認），不受下方篩選影響。</div>';
-    const sec=(title,arr,cnt)=>'<h4 class="m-stock-sec">'+title+'（'+arr.length+'）</h4>'+arr.map(x=>stockHitHtml(x,cnt,n)).join('');
+    const r=stockEnough(q.rows);
+    const sec=(title,arr)=>'<h4 class="m-stock-sec">'+title+'（'+arr.length+' 張）</h4>'+arr.map(x=>stockHitHtml(x)).join('');
     if(r.full.length){
-      res=head+sec('一張證明就全部夠',r.full,false);
+      res=sec('符合的證明',r.full);
     }else if(r.partial.length){
-      res=head+'<div class="m-stock-note"><span class="ig-badge ig-badge-warn">沒有單張證明全部夠</span><span class="ig-sub">以下列出夠出其中至少一項的證明（夠的項數多的在前，同項數舊的在前）。</span></div>'+
-        sec('夠出部分項目的證明',r.partial,true);
+      res='<div class="m-stock-note"><span class="ig-badge ig-badge-warn">沒有單張證明全部夠</span></div>'+
+        sec('部分符合的證明',r.partial);
     }else{
-      res=head+'<div class="m-stock-note"><span class="ig-badge ig-badge-warn">沒有單張證明全部夠</span></div><div class="ig-empty"><div class="ig-empty-title">也沒有任何一張證明夠出其中一項</div></div>';
+      res='<div class="m-stock-note"><span class="ig-badge ig-badge-warn">沒有單張證明全部夠</span></div><div class="ig-empty"><div class="ig-empty-title">也沒有任何一張證明夠出其中一項</div></div>';
     }
   }
   return form+'<div id="m-stock-qres" class="m-stock-qres">'+res+'</div></div>';
@@ -975,9 +1019,10 @@ SCREENS.stock=()=>{
    list+'</div>';
 };
 
-// ===== 出貨 FR-02、FR-06、FR-07、FR-08、FR-09 =====
-S.ship={date:todayStr(),customer:'',custQ:'',custAt:0,proj:'',slipId:'',spec:'',size:'',pick:'',m1:'',m2:''};
-let shipErrRow='';
+// ===== 出貨 FR-02、FR-06、FR-07、FR-08、FR-09（第 10 版：只顯示夠的＋每個爐號一行＋出貨單清單改整列可點）=====
+// rows＝新增明細的多列表單；cert＝選定的證明編號；pv＝預覽每列的 {fu 爐號, kg 公斤}，以 rows 的索引為 key
+S.ship={date:todayStr(),customer:'',custQ:'',custAt:0,proj:'',slipId:'',spec:'',size:'',pick:'',m1:'',m2:'',rows:[{spec:'',size:'',kg:''}],cert:'',pv:{}};
+let shipErrRow='',shipPvErr='',shipScrollPv=false;
 const curSlip=()=>DB.slips.find(s=>s.id===S.ship.slipId);
 // 已列印註記：舊資料沒有 printed 欄位視為未列印
 const shipIsPrinted=s=>!!(s&&s.printed===true);
@@ -990,7 +1035,15 @@ function shipUnprintOnChange(s){
   if(!shipIsPrinted(s))return false;
   s.printed=false;writeLog('出貨單 '+s.id+' 列印狀態','已列印','未列印');toast(SHIP_REPRINT_MSG);return true;
 }
-function shipSync(){const f=S.ship;['date','customer','spec','size'].forEach(k=>{const e=document.getElementById('s_'+k);if(e)f[k]=e.value});
+// 新增明細多列表單的欄位 id：第 0 列沿用原本的 s_spec／s_size／s_kg，其餘加 _索引
+const shipRid=(k,i)=>'s_'+k+(i?'_'+i:'');
+function shipEnsure(){const f=S.ship;if(!Array.isArray(f.rows)||!f.rows.length)f.rows=[{spec:'',size:'',kg:''}];if(!f.pv)f.pv={};if(f.cert==null)f.cert=''}
+function shipSync(){shipEnsure();const f=S.ship;['date','customer'].forEach(k=>{const e=document.getElementById('s_'+k);if(e)f[k]=e.value});
+  f.rows.forEach((r,i)=>{const a=document.getElementById(shipRid('spec',i));if(a){r.spec=a.value;r.size=val(shipRid('size',i));r.kg=val(shipRid('kg',i))}});
+  f.rows.forEach((r,i)=>{
+    const k=document.getElementById('s_pk_'+i),ck=document.querySelector('input[name="s_pf_'+i+'"]:checked');
+    if(k||ck){const o=f.pv[i]||(f.pv[i]={});if(k)o.kg=k.value;if(ck)o.fu=ck.value}
+  });
   const q=document.getElementById('s_custq');if(q)f.custQ=q.value;
   ['newName','newOwner','newSup'].forEach(k=>{const e=document.getElementById('s_'+k);if(e)f[k]=e.value})}
 
@@ -1046,10 +1099,17 @@ function shipEditDupCheck(){
   box.innerHTML=shipEditDupHit(p,n)?'<div class="ig-alert ig-alert-warn" role="status"><div><div class="ig-alert-title">這個客戶已有同名工程「'+h(n)+'」；仍可存檔。</div></div></div>':'';
 }
 
-A.shipChg=(k)=>{shipSync();const f=S.ship;
-  if(k==='spec'){f.size='';f.pick=''}           // 換規格：清空尺寸與已選明細
-  if(k==='size')f.pick='';
+// 新增明細的列欄位變動：k＝'spec'｜'size'｜'kg'，i＝第幾列；列有變動就丟掉預覽的修改（證明若仍符合則保持選定）
+A.shipChg=(k,i)=>{shipSync();const f=S.ship;i=i||0;
+  if(k==='spec'&&f.rows[i]){f.rows[i].size=''}   // 換規格：清空尺寸
+  f.pv={};f.pick='';
   shipView()};
+A.shipRowAdd=()=>{shipSync();const f=S.ship;f.rows.push({spec:'',size:'',kg:''});f.pv={};shipView()};
+A.shipRowDel=i=>{shipSync();const f=S.ship;if(f.rows.length<=1)return;f.rows.splice(i,1);f.pv={};shipView()};
+A.shipRowsClear=()=>{const f=S.ship;f.rows=[{spec:'',size:'',kg:''}];f.cert='';f.pv={};f.pick='';shipView()};
+A.shipCertPick=no=>{shipSync();const f=S.ship;f.cert=no;f.pv={};shipScrollPv=true;shipView()};
+// 取消帶入：丟掉從進貨清單帶來的證明與項目
+A.shipPrefillCancel=()=>{S.shipPrefill=null;shipView()};
 A.shipOpen=()=>{
   shipSync();const f=S.ship;let e=[],warn='';
   if(!f.date)e.push('請選日期。');
@@ -1115,20 +1175,45 @@ function shipSizesFor(spec){
   const has={};allDetails().forEach(x=>{if(x.d.spec===spec&&remain(x.cert,x.d)>0)has[x.d.size]=true});
   return activeList('sizes').map(x=>x.short).filter(z=>has[z]);
 }
-// 點選候選卡片：記下挑選並切換選中樣式（不重繪，保留已輸入的公斤數）
-A.shipPick=v=>{S.ship.pick=v;document.querySelectorAll('.m-ship-cand').forEach(c=>c.classList.toggle('ig-card-selected',c.getAttribute('data-pick')===v))};
+// 舊版的單筆挑選動作保留（名稱相容）；新版改成挑一張證明
+A.shipPick=v=>{S.ship.pick=v};
+// 表單中「規格、尺寸、公斤」都填了的列；idx＝在表單的第幾列（對應預覽欄位 id）
+function shipValidRows(){return S.ship.rows.map((r,i)=>({spec:r.spec,size:r.size,kg:Number(r.kg),idx:i})).filter(r=>r.spec&&r.size&&r.kg>0)}
+// 在目前的列條件下找某張證明（沿用 stock.js 的 stockEnough：full＝每列都夠，partial＝部分夠）
+function shipCertFind(no){const vr=shipValidRows();if(!vr.length)return null;const res=stockEnough(vr);return res.full.concat(res.partial).find(x=>x.cert.no===no)||null}
+// 預覽每列：只含夠的項目；爐號只有一個就自動帶入，多於一個則留空讓使用者自己點（不自動選）
+function shipPvLines(x){
+  const f=S.ship;
+  return x.per.filter(p=>p.ok).map(p=>{
+    const i=p.row.idx,o=f.pv[i]||{};
+    const fu=p.items.some(t=>t.d.furnace===o.fu)?o.fu:(p.items.length===1?p.items[0].d.furnace:'');
+    return {p,i,fu,kg:o.kg!==undefined?o.kg:p.row.kg};
+  });
+}
+// 加入這幾筆：先全部檢查，任何一筆有問題就整批擋下（不清空）；成功後清空所有列（Q79）
 A.shipAdd=()=>{
-  shipSync();const f=S.ship,s=curSlip();const kg=Math.round(+val('s_kg'));
-  if(!f.pick)return shipView('請先挑一筆證明明細。');
-  const [no,fu]=f.pick.split('|'),x=allDetails().find(y=>y.cert.no===no&&y.d.spec===f.spec&&y.d.size===f.size&&y.d.furnace===fu);
-  if(!(kg>0))return shipView('請輸入大於 0 的公斤數。');
-  const r=remain(x.cert,x.d);
-  if(kg>r)return shipView('超過剩餘數量，剩餘 '+fmt(r)+' kg，不能存檔。');
-  s.items.push({id:uid(),cert:no,spec:f.spec,size:f.size,furnace:fu,kg,status:'正常'});
-  writeLog('出貨明細 '+s.id+' '+no+' '+fu,'（新增）',kg+' kg');
+  shipSync();const f=S.ship,s=curSlip();if(!s)return;
+  const x=f.cert?shipCertFind(f.cert):null;
+  if(!x)return shipView('請先挑一張證明。');
+  const no=x.cert.no,used={},errs=[],add=[];let firstErr='';
+  shipPvLines(x).forEach(L=>{
+    const spec=L.p.row.spec,sz=L.p.row.size,pre='尺寸 '+sz+'：',kg=Math.round(+L.kg);
+    if(!L.fu){errs.push(pre+'請先選定爐號。');return}
+    if(!(kg>0)){errs.push(pre+'請輸入大於 0 的公斤數。');if(!firstErr)firstErr='s_pk_'+L.i;return}
+    const d=x.cert.details.find(y=>y.spec===spec&&y.size===sz&&y.furnace===L.fu);
+    const key=L.fu+'|'+spec+'|'+sz,r=remain(x.cert,d)-(used[key]||0);
+    if(kg>r){errs.push(pre+'超過剩餘數量，剩餘 '+fmt(r)+' kg，不能存檔。');if(!firstErr)firstErr='s_pk_'+L.i;return}
+    used[key]=(used[key]||0)+kg;add.push({spec,size:sz,furnace:L.fu,kg,rem:r});
+  });
+  if(errs.length){shipPvErr=firstErr;return shipView(errs.join('<br>'))}
+  add.forEach(a=>{
+    s.items.push({id:uid(),cert:no,spec:a.spec,size:a.size,furnace:a.furnace,kg:a.kg,status:'正常'});
+    writeLog('出貨明細 '+s.id+' '+no+' '+a.furnace,'（新增）',a.kg+' kg');
+  });
   const un=shipUnprintOnChange(s);
-  // 加入成功：規格、尺寸、已選證明全部清空（公斤欄隨候選區一起不再顯示）；失敗時上面已 return，不會走到這裡
-  save();f.spec='';f.size='';f.pick='';shipView('已加入 '+no+' '+fu+' '+fmt(kg)+' kg，剩餘變成 '+fmt(r-kg)+' kg。'+(un?SHIP_REPRINT_MSG+'。':''),'ok');
+  // 加入成功：所有列與已選證明全部清空；失敗時上面已 return，不會走到這裡
+  save();f.rows=[{spec:'',size:'',kg:''}];f.cert='';f.pv={};f.pick='';
+  shipView('已加入證明 '+no+' 共 '+add.length+' 筆：'+add.map(a=>a.size+' '+a.furnace+' '+fmt(a.kg)+' kg（剩餘變成 '+fmt(a.rem-a.kg)+' kg）').join('；')+'。'+(un?SHIP_REPRINT_MSG+'。':''),'ok');
 };
 A.shipEdit=id=>{
   shipErrRow=id;
@@ -1164,18 +1249,19 @@ function shipAlert(m,cls){
   return '<div class="ig-alert ig-alert-error" role="alert"><div><div class="ig-alert-title">'+m+'</div></div></div>';
 }
 // 欄位層（A 層）：把對應欄位標紅並在下方寫短訊息
+// 公斤欄：預覽加入時標在預覽的公斤輸入（shipPvErr），否則標在第一列的公斤輸入（s_kg）
 function shipMark(m){
-  const over=/剩餘\s*([\d,]+)\s*kg/.exec(m);
+  const over=/剩餘\s*([\d,]+)\s*kg/.exec(m),kgId=shipPvErr||'s_kg';
   const map=[['請選日期','s_date','請選日期'],['請選客戶','s_custq','請從清單選客戶'],
     ['請輸入工程名稱','s_newName','請輸入工程名稱'],['要選業主','s_newOwner','請選業主'],['要選監造單位','s_newSup','請選監造單位'],
-    ['大於 0 的公斤數','s_kg','重量需大於 0'],
-    ['超過剩餘數量，剩餘','s_kg',over?'最多 '+over[1]+' kg':'超過剩餘數量'],['重量要大於 0','e_'+shipErrRow,'重量需大於 0'],
+    ['大於 0 的公斤數',kgId,'重量需大於 0'],
+    ['超過剩餘數量，剩餘',kgId,over?'最多 '+over[1]+' kg':'超過剩餘數量'],['重量要大於 0','e_'+shipErrRow,'重量需大於 0'],
     ['超過剩餘數量，剩餘','e_'+shipErrRow,over?'最多 '+over[1]+' kg':'超過剩餘數量'],
     ['工程名稱不能空白','s_editName','工程名稱不能空白'],
     ['不能改成空白','s_editOwner','不能改成空白']];
   let first=null;
   map.forEach(([k,id,t])=>{
-    if(m.indexOf(k)<0||(id==='s_kg'&&shipErrRow)||(id.indexOf('e_')===0&&!shipErrRow))return;const e=document.getElementById(id);if(!e||e.getAttribute('aria-invalid'))return;
+    if(m.indexOf(k)<0||(id===kgId&&shipErrRow)||(id.indexOf('e_')===0&&!shipErrRow))return;const e=document.getElementById(id);if(!e||e.getAttribute('aria-invalid'))return;
     e.classList.add('ig-invalid');e.setAttribute('aria-invalid','true');
     const sp=document.createElement('span');sp.className='ig-field-error';sp.textContent=t;e.insertAdjacentElement('afterend',sp);
     if(k.indexOf('超過')===0)e.classList.add('ig-shake');
@@ -1185,7 +1271,7 @@ function shipMark(m){
   });
   if(first&&first.focus)first.focus();
 }
-// 刪除按鈕：未列印可按；已列印停用並顯示原因
+// 刪除按鈕（出貨單畫面內）：未列印可按；已列印停用並顯示原因
 function shipDelBtn(s,cls){
   if(shipIsPrinted(s))return '<button class="ig-btn ig-btn-sm" disabled aria-describedby="nd_'+s.id+'">刪除</button><span class="ig-field-hint m-ship-nodel" id="nd_'+s.id+'">'+SHIP_NODEL_MSG+'</span>';
   return '<button class="ig-btn ig-btn-danger ig-btn-sm" onclick="A.shipDel(\''+s.id+'\')">刪除</button>';
@@ -1197,9 +1283,76 @@ function shipItemDelBtn(s,i){
 }
 // 下拉選項：目前值若已停用也保留，避免存檔時被悄悄改掉
 function shipOptCur(k,cur){const a=activeList(k).map(o=>o.short);if(cur&&a.indexOf(cur)<0)a.push(cur);return a}
+// ----- 新增明細：多列表單、符合的證明、預覽 -----
+// 進貨清單帶來的內容：填入多列、選定證明，用掉就清掉 S.shipPrefill
+function shipApplyPrefill(){
+  const pf=S.shipPrefill,f=S.ship;
+  f.rows=(pf.rows||[]).map(r=>({spec:r.spec,size:r.size,kg:String(r.kg)}));
+  if(!f.rows.length)f.rows=[{spec:'',size:'',kg:''}];
+  f.cert=pf.cert;f.pv={};f.pick='';S.shipPrefill=null;shipScrollPv=true;
+  return pf;
+}
+function shipRowHtml(r,i,many){
+  const szs=shipSizesFor(r.spec);if(r.size&&szs.indexOf(r.size)<0)r.size='';
+  return '<div class="m-ship-qrow">'+
+   '<div class="ig-field"><label class="ig-label" for="'+shipRid('spec',i)+'">規格</label><select class="ig-select" id="'+shipRid('spec',i)+'" onchange="A.shipChg(\'spec\','+i+')">'+opts(activeList('specs').map(x=>x.short),r.spec,'（請選）')+'</select></div>'+
+   '<div class="ig-field"><label class="ig-label" for="'+shipRid('size',i)+'">尺寸（只列有剩餘的）</label><select class="ig-select" id="'+shipRid('size',i)+'" onchange="A.shipChg(\'size\','+i+')"'+(r.spec?'':' disabled')+'>'+opts(szs,r.size,r.spec?(szs.length?'（請選）':'（此規格沒有剩餘）'):'（請先選規格）')+'</select></div>'+
+   '<div class="ig-field"><label class="ig-label" for="'+shipRid('kg',i)+'">公斤（kg）</label><input class="ig-input ig-input-num" type="number" min="1" step="1" inputmode="numeric" id="'+shipRid('kg',i)+'" value="'+h(r.kg)+'" onchange="A.shipChg(\'kg\','+i+')" onkeydown="if(event.key===\'Enter\')this.blur()"></div>'+
+   '<div class="ig-field m-ship-qdel">'+(many?'<button class="ig-btn ig-btn-text" type="button" aria-label="刪除第 '+(i+1)+' 項" onclick="A.shipRowDel('+i+')">刪除</button>':'')+'</div></div>';
+}
+// 證明卡片：只列夠的項目，每個爐號一行「尺寸　爐號　剩 N kg」；不夠的項目整列不顯示
+function shipCertCard(x){
+  const c=x.cert,on=S.ship.cert===c.no;
+  const lines=x.per.filter(p=>p.ok).map(p=>p.items.map(i=>
+    '<span class="m-ship-line"><span class="m-ship-line-sz">'+h(p.row.size)+'</span>'+
+    '<span class="m-ship-line-f">'+h(i.d.furnace)+'</span>'+
+    '<span class="m-ship-line-sum">剩 <span class="ig-num">'+fmt(i.rem)+'</span> kg</span></span>').join('')).join('');
+  return '<button type="button" class="ig-card ig-card-selectable m-ship-cert'+(on?' ig-card-selected':'')+'" aria-pressed="'+on+'" data-cert="'+h(c.no)+'" onclick="A.shipCertPick(this.getAttribute(\'data-cert\'))">'+
+    '<span class="m-ship-cert-h"><span class="m-ship-cert-no">'+h(c.no)+'</span><span class="ig-sub">'+h(c.date)+'　'+h(c.dealer)+'</span></span>'+lines+'</button>';
+}
+// 回傳 {html, sel}：符合的證明（舊的在前）；沒有單張全部夠時列部分符合的證明（每張只列夠的項目）；sel＝選定的那張
+function shipCertsHtml(){
+  const f=S.ship,vr=shipValidRows();
+  if(!vr.length)return {html:'<p class="ig-sub">填好規格、尺寸、公斤後，這裡會列出符合的證明。</p>',sel:null};
+  const res=stockEnough(vr),all=res.full.concat(res.partial);
+  const sel=f.cert?all.find(x=>x.cert.no===f.cert)||null:null;
+  if(f.cert&&!sel)f.cert='';
+  let html=f.rows.length>vr.length?'<p class="ig-sub">還有 '+(f.rows.length-vr.length)+' 列沒填完整，先不計入。</p>':'';
+  const sec=(t,arr)=>'<h4 class="m-ship-sec2">'+t+'（'+arr.length+' 張）</h4><p class="ig-sub">舊的在前（依證明編號前 6 碼日期）；系統不代選，請自行點一張。</p><div class="m-ship-certs">'+arr.map(x=>shipCertCard(x)).join('')+'</div>';
+  if(res.full.length)html+=sec('符合的證明',res.full);
+  else if(res.partial.length)html+='<div class="m-ship-note"><span class="ig-badge ig-badge-warn">沒有單張證明全部夠</span></div>'+sec('部分符合的證明',res.partial);
+  else html+='<div class="m-ship-note"><span class="ig-badge ig-badge-warn">沒有單張證明全部夠</span></div><div class="ig-empty"><div class="ig-empty-title">也沒有任何一張證明夠出其中一項</div></div>';
+  return {html,sel};
+}
+// 預覽：選定證明要加入的明細（只含夠的項目）；爐號不只一個時列出讓使用者自己點
+function shipPreviewHtml(x){
+  const lines=shipPvLines(x),no=x.cert.no;
+  const rows=lines.map(L=>{
+    const p=L.p,fu=p.items.length===1
+      ?'<span class="m-ship-pv-fu1">爐號 <b>'+h(p.items[0].d.furnace)+'</b>（剩 <span class="ig-num">'+fmt(p.items[0].rem)+'</span> kg）</span>'
+      :'<fieldset class="m-ship-pv-fs"><legend class="ig-label">爐號（有多個，請自行點選）</legend>'+p.items.map(t=>'<label class="ig-check"><input type="radio" name="s_pf_'+L.i+'" value="'+h(t.d.furnace)+'"'+(L.fu===t.d.furnace?' checked':'')+'><span>'+h(t.d.furnace)+'　剩 '+fmt(t.rem)+' kg</span></label>').join('')+'</fieldset>';
+    return '<div class="m-ship-pv-row"><div class="m-ship-pv-sz"><span class="ig-label">尺寸</span><b>'+h(p.row.size)+'</b></div><div class="m-ship-pv-f">'+fu+'</div>'+
+      '<div class="ig-field m-ship-pv-kg"><label class="ig-label" for="s_pk_'+L.i+'">公斤（kg）</label><input class="ig-input ig-input-num" type="number" min="1" step="1" inputmode="numeric" id="s_pk_'+L.i+'" value="'+h(L.kg)+'"></div></div>';
+  }).join('');
+  return '<div id="s_preview" class="m-ship-preview"><h4 class="m-ship-sec2">證明 '+h(no)+' 要加入的明細（'+lines.length+' 筆）</h4>'+rows+
+    '<div class="ig-btn-row m-ship-actions"><button class="ig-btn ig-btn-primary" type="button" onclick="A.shipAdd()">加入這幾筆</button></div></div>';
+}
 function shipView(m,cls){
+  shipEnsure();
   const f=S.ship,s=curSlip(),isErr=!!m&&cls!=='ok';
-  let g='<div class="m-ship-wrap"><h2 class="ig-h2">出貨（FR-06／FR-07／FR-09）</h2><div id="s_msg">'+shipAlert(m,cls)+'</div>';
+  // 進貨清單帶來的證明：已開著未列印的出貨單就直接填入；否則留著並提示
+  let pfInfo='',pfWarn='';
+  if(S.shipPrefill&&s&&!shipIsPrinted(s)){
+    const pf=shipApplyPrefill();
+    pfInfo='<div class="ig-alert ig-alert-info" role="status"><div><div class="ig-alert-title">已帶入證明 '+h(pf.cert)+' 的 '+pf.rows.length+' 項，請確認下方預覽後按「加入這幾筆」。</div>'+
+      '<div class="ig-btn-row m-ship-actions"><button class="ig-btn ig-btn-sm" type="button" onclick="A.shipRowsClear()">取消帶入</button></div></div></div>';
+    if(!shipCertFind(pf.cert))pfWarn='<div class="ig-alert ig-alert-warn" role="status"><div><div class="ig-alert-title">證明 '+h(pf.cert)+' 目前已沒有足夠庫存可帶入，請從下方改選其他證明。</div></div></div>';
+  }else if(S.shipPrefill){
+    const pf=S.shipPrefill;
+    pfInfo='<div class="ig-alert ig-alert-info" role="status"><div><div class="ig-alert-title">已帶入證明 '+h(pf.cert)+' 的 '+pf.rows.length+' 項，'+(s?'這張出貨單已列印，請先換一張未列印的出貨單。':'請先選客戶、填工程並建立出貨單。')+'</div>'+
+      '<div class="ig-btn-row m-ship-actions"><button class="ig-btn ig-btn-sm" type="button" onclick="A.shipPrefillCancel()">取消帶入</button></div></div></div>';
+  }
+  let g='<div class="m-ship-wrap"><h2 class="ig-h2">出貨（FR-06／FR-07／FR-09）</h2><div id="s_msg">'+shipAlert(m,cls)+'</div>'+pfInfo+pfWarn;
   if(!s){
     g+='<div class="ig-card"><div class="ig-form-row">'+
      '<div class="ig-field"><label class="ig-label ig-label-req" for="s_date">日期</label><input class="ig-input" type="date" id="s_date" value="'+h(f.date)+'"></div>'+
@@ -1232,27 +1385,19 @@ function shipView(m,cls){
       g+='<div class="ig-table-wrap"><table class="ig-table ig-table-stack"><thead><tr><th>證明編號</th><th>規格</th><th>尺寸</th><th>爐號</th><th>狀態</th><th class="ig-num">重量（kg）</th><th class="ig-num">修改為（kg）</th><th></th></tr></thead><tbody>'+
        s.items.map(i=>'<tr'+(isErr&&shipErrRow===i.id?' class="ig-row-err"':'')+'><td data-label="證明編號">'+h(i.cert)+'</td><td data-label="規格">'+h(i.spec)+'</td><td data-label="尺寸">'+h(i.size)+'</td><td data-label="爐號">'+h(i.furnace)+'</td><td data-label="狀態"><span class="ig-badge'+(i.status==='正常'?' ig-badge-ok':' ig-badge-warn')+'">'+h(i.status)+'</span></td><td class="ig-num" data-label="重量（kg）">'+fmt(i.kg)+'</td><td class="ig-num" data-label="修改為（kg）"><div class="m-ship-edit"><label class="ig-sr-only" for="e_'+i.id+'">修改為（kg）</label><input id="e_'+i.id+'" class="ig-input ig-input-num" type="number" inputmode="numeric" value="'+i.kg+'"></div></td><td><div class="m-ship-rowact"><button class="ig-btn ig-btn-text ig-btn-sm" onclick="A.shipEdit(\''+i.id+'\')">儲存修改</button>'+shipItemDelBtn(s,i)+'</div></td></tr>').join('')+
        '</tbody></table></div>';
-    }else g+='<div class="ig-empty"><div class="ig-empty-title">尚無明細</div><div>從下方挑選證明明細，加入這張出貨單</div></div>';
-    const szs=shipSizesFor(f.spec);if(f.size&&szs.indexOf(f.size)<0)f.size='';
-    g+='<h3 class="ig-h2 m-ship-sec">新增出貨明細</h3><div class="ig-card"><div class="ig-form-row">'+
-     '<div class="ig-field"><label class="ig-label" for="s_spec">規格</label><select class="ig-select" id="s_spec" onchange="A.shipChg(\'spec\')">'+opts(activeList('specs').map(x=>x.short),f.spec,'（請選）')+'</select></div>'+
-     '<div class="ig-field"><label class="ig-label" for="s_size">尺寸（只列有剩餘的）</label><select class="ig-select" id="s_size" onchange="A.shipChg(\'size\')"'+(f.spec?'':' disabled')+'>'+opts(szs,f.size,f.spec?(szs.length?'（請選）':'（此規格沒有剩餘）'):'（請先選規格）')+'</select></div></div>';
-    if(f.spec&&f.size){
-      const cs=candidates(f.spec,f.size);
-      g+='<p class="ig-sub">剩餘 &gt; 0 的證明明細，舊的在前（依證明編號前 6 碼日期）；系統不代選，請自行挑一筆。</p><div role="radiogroup" aria-label="證明明細">'+
-       cs.map(c=>{const v=c.cert.no+'|'+c.d.furnace,on=f.pick===v;return '<label class="ig-card ig-card-selectable m-ship-cand'+(on?' ig-card-selected':'')+'" data-pick="'+h(v)+'"><span class="m-ship-cand-head"><input type="radio" name="pk" value="'+h(v)+'"'+(on?' checked':'')+' onchange="A.shipPick(this.value)"><span class="ig-card-title">'+h(c.cert.no)+'</span></span>'+
-        '<span class="ig-card-line"><span>爐號</span><span>'+h(c.d.furnace)+'</span></span><span class="ig-card-line"><span>剩餘（kg）</span><span class="ig-num">'+fmt(c.rem)+'</span></span></label>'}).join('')+'</div>'+
-       (cs.length?'':'<div class="ig-empty"><div class="ig-empty-title">沒有剩餘 &gt; 0 的證明明細</div><div>此規格與尺寸目前沒有可出貨的存量</div></div>')+
-       '<div class="ig-field m-ship-kg"><label class="ig-label ig-label-req" for="s_kg">重量（kg）</label><input class="ig-input ig-input-num" id="s_kg" type="number" min="1" inputmode="numeric"></div>'+
-       '<div class="ig-btn-row m-ship-actions"><button class="ig-btn ig-btn-primary" onclick="A.shipAdd()">加入出貨單</button></div>';
-    }
-    g+='</div>';
+    }else g+='<div class="ig-empty"><div class="ig-empty-title">尚無明細</div><div>從下方填規格、尺寸、公斤，點一張符合的證明，加入這張出貨單</div></div>';
+    const many=f.rows.length>1,cs=shipCertsHtml();
+    g+='<h3 class="ig-h2 m-ship-sec">新增出貨明細</h3><div class="ig-card">'+
+     f.rows.map((r,i)=>shipRowHtml(r,i,many)).join('')+
+     '<div class="m-ship-qact"><button class="ig-btn" type="button" onclick="A.shipRowAdd()">＋ 再加一項</button><button class="ig-btn" type="button" onclick="A.shipRowsClear()">清空</button></div>'+
+     '<div id="s_certs" class="m-ship-certwrap">'+cs.html+'</div>'+(cs.sel?shipPreviewHtml(cs.sel):'')+'</div>';
   }
   g+='</div>';
   document.getElementById('main').innerHTML=g;
   if(!s){shipCustRender();shipDupCheck()}
   if(isErr)shipMark(String(m));
-  shipErrRow='';
+  if(shipScrollPv){const e=document.getElementById('s_preview');if(e&&e.scrollIntoView)e.scrollIntoView({block:'nearest'});shipScrollPv=false}
+  shipErrRow='';shipPvErr='';
 }
 SCREENS.ship=()=>shipView();
 // 已列印／未列印標記
@@ -1263,6 +1408,8 @@ S.ships={c:'',p:'',n:'',logq:'',unp:false};
 A.shipsF=()=>{const u=document.getElementById('q_u');S.ships={c:val('q_c'),p:val('q_p'),n:val('q_n'),logq:val('q_l'),unp:u?u.checked:!!S.ships.unp};SCREENS.ships()};
 A.shipsClear=()=>{S.ships={c:'',p:'',n:'',logq:'',unp:false};SCREENS.ships()};
 A.slipOpen=id=>{S.ship.slipId=id;S.ship.pick='';go('ship')};
+// 清單整列可點開啟；Enter 也可（只在焦點在列本身時），列印格不觸發開啟
+A.shipsRowKey=(ev,id)=>{if(ev.key==='Enter'&&ev.target===ev.currentTarget){ev.preventDefault();A.slipOpen(id)}};
 SCREENS.ships=()=>{
   const q=S.ships;
   const filtered=!!(q.c||q.p||q.n||q.unp);
@@ -1273,9 +1420,9 @@ SCREENS.ships=()=>{
    '<div class="ig-field"><label class="ig-label" for="q_p">工程名稱含</label><input class="ig-input" id="q_p" value="'+h(q.p)+'" onchange="A.shipsF()"></div>'+
    '<div class="ig-field"><label class="ig-label" for="q_n">證明編號含</label><input class="ig-input" id="q_n" value="'+h(q.n)+'" onchange="A.shipsF()"></div></div>'+
    '<label class="ig-check m-ship-unp"><input type="checkbox" id="q_u"'+(q.unp?' checked':'')+' onchange="A.shipsF()"><span>只看未列印</span></label>'+
-   '<p class="ig-field-hint">依日期倒序，共 '+rows.length+' 張。未列印的出貨單可刪除；已列印的只能修改。</p></div>'+
-   (rows.length?'<div class="ig-table-wrap"><table class="ig-table ig-table-stack"><thead><tr><th>日期</th><th>客戶</th><th>工程</th><th class="ig-num">明細數</th><th class="ig-num">合計（kg）</th><th>列印</th><th></th></tr></thead><tbody>'+
-    rows.map(s=>'<tr><td data-label="日期">'+h(s.date)+'</td><td data-label="客戶">'+h(s.customer)+'</td><td class="m-ship-proj" data-label="工程">'+h(proj(s.project).name)+'</td><td class="ig-num" data-label="明細數">'+s.items.length+'</td><td class="ig-num" data-label="合計（kg）">'+fmt(s.items.reduce((a,i)=>a+i.kg,0))+'</td><td data-label="列印"><div class="m-ship-printcell">'+shipPrintBadge(s)+'<label class="ig-check m-ship-print"><input type="checkbox" id="p_'+s.id+'"'+(shipIsPrinted(s)?' checked':'')+' onchange="A.shipPrinted(\''+s.id+'\',this.checked,\'ships\')"><span>已列印</span></label></div></td><td><div class="m-ship-rowact"><button class="ig-btn ig-btn-text ig-btn-sm" onclick="A.slipOpen(\''+s.id+'\')">開啟／修改</button>'+shipDelBtn(s)+'</div></td></tr>').join('')+'</tbody></table></div>'
+   '<p class="ig-field-hint">依日期倒序，共 '+rows.length+' 張。點一列打開該出貨單；未列印的出貨單可在出貨單畫面內刪除，已列印的只能修改。</p></div>'+
+   (rows.length?'<div class="ig-table-wrap m-ship-list"><table class="ig-table"><thead><tr><th>日期</th><th>客戶</th><th>工程</th><th>列印</th></tr></thead><tbody>'+
+    rows.map(s=>'<tr class="m-ship-row" tabindex="0" aria-label="開啟出貨單 '+h(s.date)+' '+h(s.customer)+'" onclick="A.slipOpen(\''+s.id+'\')" onkeydown="A.shipsRowKey(event,\''+s.id+'\')"><td>'+h(s.date)+'</td><td>'+h(s.customer)+'</td><td class="m-ship-proj">'+h(proj(s.project).name)+'</td><td class="m-ship-pcell" onclick="event.stopPropagation()" onkeydown="event.stopPropagation()"><div class="m-ship-printcell">'+shipPrintBadge(s)+'<label class="ig-check m-ship-print"><input type="checkbox" id="p_'+s.id+'"'+(shipIsPrinted(s)?' checked':'')+' onchange="A.shipPrinted(\''+s.id+'\',this.checked,\'ships\')"><span>已列印</span></label></div></td></tr>').join('')+'</tbody></table></div>'
    :'<div class="ig-empty"><div class="ig-empty-title">'+(filtered?'找不到符合的資料':'還沒有出貨單')+'</div><div>'+(filtered?'換個條件再試一次':'先到出貨建立一張出貨單')+'</div>'+(filtered?'<button class="ig-btn" onclick="A.shipsClear()">清除篩選</button>':'<button class="ig-btn ig-btn-primary" onclick="go(\'ship\')">前往出貨</button>')+'</div>')+
    '<h3 class="ig-h2 m-ship-sec">修改紀錄（FR-09）</h3><div class="ig-field"><label class="ig-label" for="q_l">篩選（帳號或對象）</label><input class="ig-input" id="q_l" value="'+h(q.logq)+'" onchange="A.shipsF()"></div>'+
    (lg.length?'<div class="ig-table-wrap"><table class="ig-table ig-table-stack"><thead><tr><th>誰</th><th>何時</th><th>哪一筆</th><th>修改前</th><th>修改後</th></tr></thead><tbody>'+
