@@ -1691,7 +1691,7 @@ function outMissing(s){
 }
 const tonStr=kg=>(kg/1000).toFixed(3);
 // 以下為樣式用的輔助函式（只產生 HTML 字串）
-const outHead=()=>'<header class="ig-header m-out-noprint noprint"><span class="ig-header-title">產出</span><span class="ig-proto-tag">原型・未審閱</span></header>';
+const outHead=()=>'';
 const outBlank=u=>'<span class="m-out-fill m-out-fill-'+u+'" contenteditable></span>';
 const outPrintBtns=dis=>{const d=dis?'disabled ':'';return '<div class="ig-btn-row m-out-actions"><button class="ig-btn" '+d+'onclick="A.outPrint(\'cover\')">只產出封面</button><button class="ig-btn" '+d+'onclick="A.outPrint(\'rec\')">只產出出貨紀錄</button><button class="ig-btn" '+d+'onclick="A.outPrint(\'cert\')">只產出原廠證明</button><button class="ig-btn ig-btn-primary" '+d+'onclick="A.outPrint(\'all\')">產出三份（列印模擬）</button></div>'};
 
